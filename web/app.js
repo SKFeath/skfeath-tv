@@ -103,18 +103,40 @@ function applySelection(all) {
 }
 
 async function refreshFromSource() {
-  if (!window.SOURCE_URL) return;
-  try {
-    const res = await fetch(window.SOURCE_URL, { cache: 'no-store' });
-    if (!res.ok) return;
-    const fresh = applySelection(parseM3U(await res.text()));
-    if (fresh.length) {
-      state.channels = fresh;
-      applyFilter();
-      el('freshness').textContent = 'updated just now';
+  const urls = window.SOURCE_URLS || [];
+  if (!urls.length) return;
+
+  // Same first-source-wins rule as the build tool, so a live refresh in the
+  // browser can never disagree with what was baked into the site.
+  const seen = new Set();
+  const merged = [];
+  let anyOk = false;
+
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) continue;
+      anyOk = true;
+      for (const c of parseM3U(await res.text())) {
+        if (seen.has(c.name)) continue;
+        seen.add(c.name);
+        merged.push(c);
+      }
+    } catch (e) {
+      // one source failing should not block the others
     }
-  } catch (e) {
+  }
+
+  if (!anyOk) {
     el('freshness').textContent = 'using bundled list';
+    return;
+  }
+
+  const fresh = applySelection(merged);
+  if (fresh.length) {
+    state.channels = fresh;
+    applyFilter();
+    el('freshness').textContent = 'updated just now';
   }
 }
 
@@ -218,8 +240,8 @@ video.addEventListener('waiting', () => {
 // ---------------------------------------------------------------------------
 const HEALTH_KEY = 'iptv-health-v1';
 const HEALTH_TTL_MS = 6 * 60 * 60 * 1000;
-const PROBE_TIMEOUT_MS = 9000;
-const PROBE_CONCURRENCY = 6;
+const PROBE_TIMEOUT_MS = 7000;
+const PROBE_CONCURRENCY = 14;
 
 function loadHealth() {
   try {
@@ -267,15 +289,31 @@ async function scanHealth() {
   let done = 0;
   const queue = todo.slice();
 
+  // With a couple of thousand channels a straight sweep takes minutes, and
+  // the group you are actually looking at might be scanned last. So workers
+  // always take the next channel in the current group first; switching group
+  // re-aims the scan at whatever you just opened.
+  const takeNext = () => {
+    if (!queue.length) return null;
+    if (state.group !== 'all') {
+      const i = queue.findIndex((c) => c.group === state.group);
+      if (i !== -1) return queue.splice(i, 1)[0];
+    }
+    return queue.shift();
+  };
+
   const worker = async () => {
-    while (queue.length) {
-      const ch = queue.shift();
+    for (;;) {
+      const ch = takeNext();
+      if (!ch) return;
       state.health[ch.url] = await probeChannel(ch.url);
       done++;
-      if (done % 5 === 0 || !queue.length) {
+      if (done % 10 === 0 || !queue.length) {
         updateHealthLabel(false, done, todo.length);
         applyFilter();
       }
+      // Persist periodically so a closed tab does not throw the work away.
+      if (done % 200 === 0) saveHealth();
     }
   };
 

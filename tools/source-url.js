@@ -1,10 +1,18 @@
 'use strict';
-// The playlist the site is built from. Change this one line to point the whole
-// site at a different M3U.
+// The playlists the site is built from. Add or remove URLs to change what
+// feeds the whole site.
 //
-// This URL must send CORS headers (Access-Control-Allow-Origin), because the
-// site refreshes itself from the browser. GitHub raw does.
-const SOURCE_URL =
-  'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/main/playlist.m3u';
+// Each URL must send CORS headers (Access-Control-Allow-Origin), because the
+// browser fetches it directly. GitHub raw does.
+//
+// When the same channel name appears in more than one playlist, the copy from
+// whichever URL is listed FIRST wins and the rest are dropped - so order
+// matters if you care which source's link is used for a given channel.
+const SOURCE_URLS = [
+  // BDIX / Bangladesh - listed first so its links win on any name clash.
+  'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/main/playlist.m3u',
+  // Free-TV: large international list, grouped by country.
+  'https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8',
+];
 
-module.exports = { SOURCE_URL };
+module.exports = { SOURCE_URLS };

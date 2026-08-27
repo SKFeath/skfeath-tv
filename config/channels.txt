@@ -4,13 +4,578 @@
 #  One channel per line. Comment a line out with # to hide it,
 #  or delete the line entirely. Then run:  npm run build
 #
-#  Channels marked "http-only" are commented out already: browsers
-#  refuse to load plain http:// video on an https:// page, so they
-#  cannot work on a hosted site.
+#  To drop a whole category, comment out every line under its
+#  "## Group name" heading.
 #
-#  Regenerate this file any time with:  npm run channels
-#  Your choices are preserved when you do.
+#  Lines already commented with "<- reason" cannot play in a
+#  browser at all (plain http, YouTube/Twitch page links, DASH).
+#
+#  Sourced from 2 playlist(s) - see tools/source-url.js.
+#  A name appearing in several playlists is kept once, from the
+#  source listed first there.
+#
+#  Regenerate any time with:  npm run channels
+#  Your on/off choices are preserved; brand-new channels arrive on.
 # ---------------------------------------------------------------
+
+## Italy  (400)
+Rai 1 Ⓖ
+Rai 2 Ⓖ
+Rai 3 Ⓖ
+Rete 4 Ⓖ
+Canale 5 Ⓖ
+Italia 1 Ⓖ
+La7
+TV8 Ⓖ
+Nove
+20 Mediaset Ⓖ
+Rai 4 Ⓖ
+Iris Ⓖ
+Rai 5 Ⓖ
+Rai Movie Ⓖ
+Rai Premium Ⓖ
+Cielo Ⓖ
+27 Twentyseven Ⓖ
+TV 2000
+La7 Cinema
+La 5 Ⓖ
+Real Time
+QVC
+Food Network
+Cine34   Ⓖ
+Focus Ⓖ
+RTL 102.5
+Discovery Channel
+Giallo
+Top Crime   Ⓖ
+BOING   Ⓖ
+K2
+Rai Gulp Ⓖ
+Rai YoYo Ⓖ
+Frisbee
+Cartoonito Ⓖ
+Super!
+Rai News 24 Ⓖ
+Italia 2 Ⓖ
+Sky TG24 Ⓖ
+TGCOM 24 Ⓖ
+DMAX
+Rai Storia Ⓖ
+Mediaset Extra Ⓖ
+HGTV – Home & Garden Tv
+Rai Scuola Ⓖ
+Rai Sport Ⓖ
+Turbo
+Sportitalia Plus
+Travel TV
+Donna TV Ⓢ
+SuperTennis
+Alma TV
+Radio 105 TV Ⓖ
+R101 TV Ⓖ
+Deejay TV
+RadioItaliaTV
+Radio KISS KISS TV
+Rai Radio 2 Visual Radio
+RTL 102.5 Traffic
+MAN-GA
+Radio24-IlSole24OreTV
+BeJoy.Kids
+Gambero Rosso
+RadioFreccia
+RDS Social TV
+Radio ZETA
+Radio TV Serie A con RDS
+Sportitalia SOLOCALCIO
+BIKE Channel
+Radio Montecarlo TV Ⓖ
+Virgin Radio TV Ⓖ
+Senato TV
+Camera dei Deputati Ⓢ
+Rai 4K Ⓖ
+UniNettuno University TV Ⓖ
+111 Tv
+12 Tv Parma
+4 You Tv
+Abc Tv
+AB Channel
+Alpauno
+Alto Adige Tv
+Antenna 2 Bergamo
+Antenna 3 Massa
+Antenna 3 Veneto Nord Est
+Antenna Sicilia
+Antenna Sud
+Antenna Sud Extra
+Aristanis SuperTv
+Arte Network Orler
+Aurora Arte
+Azzurra Tv Vco
+# Basilicata 1 Tv   <- http-only, cannot play on an https site
+Bergamo Tv
+BOM Channel
+ByoBlu
+Cafe Tv 24
+Calabria Uno Tv
+Calabria tv
+Canale 10
+Canale 2
+Canale 21
+Canale 21 Extra
+# Canale 7   <- http-only, cannot play on an https site
+Canale 74 Sicilia
+Canale 8 Campania
+Canale Italia
+Carina Tv
+Casa Italia 53
+Casa Sanremo Tv
+# Castrovillari Tv   <- http-only, cannot play on an https site
+Cittaceleste Tv
+Company Tv
+Cremona 1
+Cusano Italia Tv
+Cusano News 7
+# Delta Tv   <- http-only, cannot play on an https site
+Deluxe 139
+Di.Tv 80
+Di.Tv 92
+# Digital Tv7 Benevento   <- http-only, cannot play on an https site
+Donna Shopping Tv
+E'live Brescia Tv
+Easy Tv Canale 190
+Entella Tv
+EQUtv
+Equos Tv
+Espansione Tv
+Esperia Tv
+Etna Espresso Channel
+è Tv Marche
+è Tv Rete7
+è Tv Umbria
+Euro Tv
+Extra Tv
+FM Tv Marche
+Fano Tv
+Fascino Tv
+GRP Televisione
+GarganoTv
+Giornale Radio Tv
+Giovanni Paolo Tv
+Globo Tv
+Globus Television
+Gold Tv
+GO-TV Channel
+GS Channel
+Icaro Tv Rimini
+Idea Plus
+il61
+Italia 2 Tv
+Italia 7
+Italia 8 Prestige
+Italia Channel
+Iunior Tv
+L'Altro Corriere Tv
+La Nuova Tv
+La Tenda Tv
+La tr3 Marsala
+LaC News 24
+LaC Tv Calabria
+Lab Tv
+Lazio Tv
+# Le Cronache Lucane Tv   <- http-only, cannot play on an https site
+Lira Tv
+Lombardia Tv
+# Love in Venice   <- http-only, cannot play on an https site
+Lucania Tv
+Made in BO
+Maria Vision
+Matrix Tv
+Mediterranea Tv
+Medjugorje Italia Tv
+Medjugorje Tv Puglia
+Minformo Tv
+Motori Tv
+NTI Canale 271
+News24 City
+Nuova TV Nazionale
+Nuova Tv 1
+Nuova Tv 2
+Nuvola Tv
+Odeon 24
+Ofanto Tv
+Onda Novara Tv
+Onda Tv Sicilia
+# Onda Web Radio   <- http-only, cannot play on an https site
+Ora Tv
+Orler Tv
+Otto Channel
+Padre Pio Tv
+Paradise Tv
+Parole di Vita
+Partenope Tv
+Peer Tv Alto Adige
+Peer TV Südtirol
+Pop Tv
+Prima Tv Napoli
+Prima Tv Sicilia
+PrimaFREE
+Primantenna Torino
+Primocanale
+Promovideo Tv
+# Quarto Canale Flegreo   <- http-only, cannot play on an https site
+Radio 3M InBlu
+Radio 51 Tv
+Radio Birikina Tv
+Radio Bruno Tv
+Radio Ibiza
+Radio Immagine Tv
+Radio Italia Cina Tv
+Radio Libertà
+Radio m2o Tv
+Radio Monte Kronio Tv (R.M.K.)
+Radio Norba Tv
+Radio Piter Pan Tv
+Radio Radio Tv
+Radio Radiosa Tv
+Radio Roma
+Radio Roma Television
+Ran Friul
+RDE Tv
+Reggio Tv
+Rei Tv
+Rete 55
+Rete 8 Vga
+Rete 8
+Rete 8 Sport
+Rete Biella Tv
+Rete Mia
+Rete Oro Tv
+Rete Sole
+Rete Tv Italia
+# Rete Veneta   <- http-only, cannot play on an https site
+Roma Tv 82
+Rossini Tv
+RTC Quarta Rete
+RTC Telecalabria
+RTI Calabria
+RTL 102.5 + Plus
+RTM Manduria
+RTR99 Tv
+# Rtp Tv   <- http-only, cannot play on an https site
+Rttr
+Rtv 38 Toscana
+# SL 48 Tv   <- http-only, cannot play on an https site
+ST Europe Channel
+Sardegna 1
+Set Tv Cilento
+Sesta Rete
+Sicilia 24 Tv
+Sicilia Tv
+Sienatv
+Sophia Tv
+Stiletv
+Super J Tv
+Super Six
+# Supertv   <- http-only, cannot play on an https site
+T9
+TRC Santeramo
+TRL Tele Radio Leo
+TSD Tv Arezzo(Tele San Domenico)
+# TVL (TV Libera Pistoia)   <- http-only, cannot play on an https site
+Tcf Tv
+Tci
+Teatro Tv
+Tele A
+# Tele Abruzzo Tv   <- http-only, cannot play on an https site
+Tele Acras
+Tele Arena
+Tele Bari
+Tele Belluno
+Tele Boario
+Tele Bruzzano
+# Tele Chiara   <- http-only, cannot play on an https site
+Telecolor
+Telecolor Sicilia
+Tele Cupole
+Tele Estense
+Tele Foggia
+Tele Friuli
+Tele Ischia
+# Tele Jonio   <- http-only, cannot play on an https site
+Tele Liberta' HD
+Tele Liguria Sud
+Tele Mantova
+Tele Mia
+Tele Mia Extra
+Tele Mistretta
+# Tele Molise   <- http-only, cannot play on an https site
+Tele Nord Genova
+TG Norba 24
+Telenorba
+Tele Nostra
+Tele Occidente
+# Tele Oltre   <- http-only, cannot play on an https site
+Tele One
+Tele Pace Trento
+# Tele Pavia   <- http-only, cannot play on an https site
+Tele Pegaso
+Tele Piadena
+Tele Pordenone
+# Tele Quattro Trieste   <- http-only, cannot play on an https site
+Tele Radio Ercolano
+Tele Radio Pace 1
+Tele Radio Pace 2
+Tele Radio Pace 3
+Tele Radio Pace 4
+Tele Radio Orte
+Tele Radio Sciacca
+Tele Sirio
+Tele Spazio Messina
+Tele Sud Puglia
+Tele Tricolore
+Tele Tutto
+Tele Tutto 2
+Tele Tutto 24
+Tele Venezia
+Tele Video Agrigento (T.V.A.)
+Tele8 Tv
+TeleAmbiente
+Telecampione
+Telecittà Padova
+Telecity Lombardia
+Telecity Piemonte
+Telecity Valle D'Aosta
+TeleCostaSmeralda
+Telegenova
+Teleiblea
+Teleitalia 41
+Telejato
+# Teleleonessa   <- http-only, cannot play on an https site
+TeleMajg
+Telenova
+Telerama
+TeleRegione
+TeleRegione Color
+TeleRegione Live
+TeleRent 7Gold
+Telereporter
+Teleromagna
+Teleromagna 24
+TeleRomaDue
+Telesud Trapani
+# Telesveva   <- DASH stream, this player only handles HLS
+Teleuniverso
+Televallo Trapani
+TLT Molise
+Top Calcio 24
+Tremedia Tv
+Trentino Tv
+# Tuscia Sabina 2000Tv   <- http-only, cannot play on an https site
+Tv 12
+Tv Campi Flegrei
+Tv Luna Napoli
+Tv Prato
+Tv Qui Modena
+# Tv Uno   <- http-only, cannot play on an https site
+Tv Yes
+# Tva Vicenza   <- http-only, cannot play on an https site
+Tvr Xenon
+Tvrs Tv
+Umbria+ TRT
+Umbria Tv
+Uno Tv
+Uno4 Tv
+# Vera Tv   <- http-only, cannot play on an https site
+VB33
+Video Calabria
+Video Mediterraneo
+Video Nola
+Video Regione Sicilia
+Video Star Tv Sicilia
+Video Touring Tv
+# Videolina   <- http-only, cannot play on an https site
+Videonovara
+Videotelecarnia
+Vintage Radio Tv
+Vuemme Tv
+Webcom Tv
+WLTV
+Yvii Tv
+Zerouno Tv Music
+Zerouno Tv News
+# Radio Colonna Tv Ⓨ   <- links to a web page, not a stream
+# TRM h24 Ⓨ   <- links to a web page, not a stream
+# Euronews Italian Ⓨ   <- links to a web page, not a stream
+# Teleroma 56 Ⓣ   <- links to a web page, not a stream
+# TeleRadioStereo Ⓣ   <- links to a web page, not a stream
+# RAI Italia America   <- http-only, cannot play on an https site
+Class CNBC Ⓖ
+Canale 58
+# Canale Uno Tivù Ⓣ   <- links to a web page, not a stream
+# Prima Tivvù Ⓨ   <- links to a web page, not a stream
+Rete 7 Tv
+Studio 100
+Tele Club Italia
+Tele Gela
+Tv Campane 1
+Tv Campania Streaming
+
+## VOD Italy  (155)
+Sportitalia LIVE24
+Sport2U
+# Grande Fratello Vip Regia 1 Ⓢ Ⓖ   <- DASH stream, this player only handles HLS
+# Grande Fratello Vip Regia 2 Ⓢ Ⓖ   <- DASH stream, this player only handles HLS
+# Grande Fratello Vip Regia un'ora fa Ⓢ Ⓖ   <- DASH stream, this player only handles HLS
+Stories – Rakuten TV
+Classico – Rakuten TV
+Thriller – Rakuten TV
+Commedia – Rakuten TV
+Documentari – Rakuten TV
+Family – Rakuten TV
+Romance – Rakuten TV
+Film Top – Rakuten TV
+Drammatico – Rakuten TV
+Film d'azione – Rakuten TV
+Euronews in diretta
+FailArmy
+The Pet Collective
+Canale Europa
+People Are Awesome
+Yamato Animation
+BBC Doctor Who
+BBC Drama
+Televisa Telenovelas
+Humanity Documentari
+The Boat Show
+Fashion TV
+Motor1TV
+SportOutdoor.tv
+Italian Fishing TV
+FUEL TV
+Teletubbies
+duckTV
+SuperToons TV
+Planeta Junior
+MONDO TV KIDS
+Vevo Pop
+Radio Italia Trend
+Clubbing TV
+Deluxe Lounge HD
+Trace Latina Ⓖ
+Trace Urban Ⓖ
+Full Moon
+Cinema Segreto
+Bizzarro Movies
+CGtv
+WP
+Risate all'italiana
+Shorts Ⓖ
+Sofy.tv
+VH1+ Girl Power! – Pluto TV
+Car Chase – Pluto TV
+Monster Jam – Pluto TV
+MacGyver – Pluto TV
+Settimo Cielo – Pluto TV
+BBC Drama – Pluto TV
+Le sorelle mcleod – Pluto TV
+Autostop per il cielo – Pluto TV
+Renegade – Pluto TV
+Serie – Pluto TV
+Film – Pluto TV
+Film Azione – Pluto TV
+Film Thriller – Pluto TV
+Horror – Pluto TV
+Western – Pluto TV
+Film Classici – Pluto TV
+Cinema Italiano – Pluto TV
+Totò – Pluto TV
+Film Romantici – Pluto TV
+Christmas – Pluto TV
+Film Drama – Pluto TV
+Film Commedia – Pluto TV
+East is East – Pluto TV
+The Asylum – Pluto TV
+Star Trek: The Original Series – Pluto TV
+Doctor Who – Pluto TV
+Sci-Fi – Pluto TV
+Mutant X – Pluto TV
+Andromeda – Pluto TV
+Sanctuary – Pluto TV
+Forensic Files – Pluto TV
+Squadra Speciale Cobra 11 – Pluto TV
+Crime – Pluto TV
+Mai dire sì – Pluto TV
+Consulenze illegali – Pluto TV
+Il banco dei pugni – Pluto TV
+Affare Fatto – Pluto TV
+Catfish – Pluto TV
+Il Testimone – Pluto TV
+Case Pazzesche – Pluto TV
+Geordie Shore – Pluto TV
+Ex on the beach – Pluto TV
+#Riccanza – Pluto TV
+The Hills – Pluto TV
+Reality – Pluto TV
+Made – Pluto TV
+16 anni e incinta – Pluto TV
+Teen Mom – Pluto TV
+Jersey Shore – Pluto TV
+Top Gear – Pluto TV
+Pimp My Ride – Pluto TV
+World poker tour – Pluto TV
+PFL MMA – Pluto TV
+Robot Wars by MECH+ – Pluto TV
+Ultimate Classic Wrestling – Pluto TV
+The Boat Show – Pluto TV
+Unbeaten Sports – Pluto TV
+Sport – Pluto TV
+Ridiculousness – Pluto TV
+Scherzi e risate – Pluto TV
+Fail army – Pluto TV
+People are awesome – Pluto TV
+The pet collective – Pluto TV
+Just for laughs – Pluto TV
+South Park – Pluto TV
+Super! Spongebob – Pluto TV
+Due Fantagenitori – Pluto TV
+Yu-Gi-Oh! – Pluto TV
+Anime – Pluto TV
+Avatar – Pluto TV
+Inazuma Eleven – Pluto TV
+Super! Rugrats – Pluto TV
+Teenage Mutant Ninja Turtles – Pluto TV
+Super! Icarly – Pluto TV
+Super! Victorious – Pluto TV
+Super! Zoey 101 – Pluto TV
+Super! POP – Pluto TV
+Super! Gaming – Pluto TV
+Super! Girl Power – Pluto TV
+Super! Intervallo – Pluto TV
+Super! Spyders – Pluto TV
+Kids – Pluto TV
+Kids Ukraine – Pluto TV
+Super! Star – Pluto TV
+Super! Risate – Pluto TV
+Super! Brothers and Sisters – Pluto TV
+VH1+ Music Legends – Pluto TV
+VH1+ Back to 90's – Pluto TV
+VH1+ Rock! – Pluto TV
+VH1+ Canzoni Italiane – Pluto TV
+VH1+ Hip Hop & Rap – Pluto TV
+Deluxe Lounge HD – Pluto TV
+K-Pop – Pluto TV
+Fireplace – Pluto TV
+Euronews – Pluto TV
+CBS News – Pluto TV
+Cucina – Pluto TV
+Real life – Pluto TV
+Naturescape – Pluto TV
+Natura – Pluto TV
+Storia – Pluto TV
+Documentari – Pluto TV
+Viaggi – Pluto TV
+House of Docs – Pluto TV
+Le vite degli altri – Pluto TV
 
 ## [LIVE] BDIX ♛  (69)
 [BD] Welcome to PlayZ TV {Sponsored}
@@ -83,6 +648,294 @@
 [BD] POGO
 [BD] Sony YAY
 
+## Greece  (66)
+# ERT 1 Ⓖ   <- DASH stream, this player only handles HLS
+# ERT 2 Ⓖ   <- DASH stream, this player only handles HLS
+# ERT 3 Ⓖ   <- DASH stream, this player only handles HLS
+# ERT News   <- DASH stream, this player only handles HLS
+# ERT World   <- DASH stream, this player only handles HLS
+# ERT Sports 1   <- DASH stream, this player only handles HLS
+# ERT Sports 2   <- DASH stream, this player only handles HLS
+# ERT Sports 3   <- DASH stream, this player only handles HLS
+# ERT Sports 4   <- DASH stream, this player only handles HLS
+# ERT Kids Ⓖ   <- DASH stream, this player only handles HLS
+Vouli TV
+Mega News
+ANT1
+Star
+Star International
+AlphaTV
+# Skai TV   <- http-only, cannot play on an https site
+Open TV
+MAK TV
+# Euronews Greek   <- links to a web page, not a stream
+Action24
+Alert
+ART
+# Blue Sky   <- links to a web page, not a stream
+High TV
+Kontra
+# Mad Ⓨ   <- links to a web page, not a stream
+Naftemporiki TV
+One Channel
+# 4E   <- http-only, cannot play on an https site
+# DION   <- links to a web page, not a stream
+Egnatia
+Euro
+Gnomi
+Pella
+# Pontos   <- links to a web page, not a stream
+TV 100
+Vergina
+Best TV
+Hlektra
+Ionian Channel
+Lepanto
+Lychnos
+Mesogeios TV
+Epsilon
+Star Central Greece
+# 91NRG   <- http-only, cannot play on an https site
+Astra
+# Thessalia   <- links to a web page, not a stream
+TRT
+Acheloos
+ART TV
+Corfu
+Epirus TV 1
+Start
+Center TV
+# Delta Evros   <- http-only, cannot play on an https site
+Thraki Net TV
+# Creta   <- http-only, cannot play on an https site
+Kriti 1
+Kriti TV
+NEA
+TeleKriti
+# Samiaki TV   <- http-only, cannot play on an https site
+Syros TV1
+# Η Φωνή της Ελλάδας   <- DASH stream, this player only handles HLS
+
+## Russia  (58)
+# Первый канал   <- DASH stream, this player only handles HLS
+Россия 1
+Матч ТВ Ⓢ
+# НТВ Ⓢ   <- http-only, cannot play on an https site
+Пятый канал Ⓢ
+Россия-Культура Ⓢ
+Россия-24 (1080p)
+Россия-24 (720p)
+Карусель Ⓢ
+ОТР Ⓢ
+# ТВ Центр Ⓢ   <- http-only, cannot play on an https site
+Рен ТВ Ⓢ
+Спас Ⓢ
+# СТС Ⓢ   <- http-only, cannot play on an https site
+# Домашний Ⓢ   <- http-only, cannot play on an https site
+ТВ-3 Ⓢ
+Пятница! Ⓢ
+Звезда
+# Мир   <- http-only, cannot play on an https site
+# ТНТ Ⓢ   <- http-only, cannot play on an https site
+Муз-ТВ Ⓢ
+# РБК   <- http-only, cannot play on an https site
+RT Д Русский Ⓖ
+CGTN Pусский
+# Euronews по-русски Ⓨ   <- links to a web page, not a stream
+РТР-Планета Ⓢ
+Че
+Арктика 24 Ⓥ
+Архыз 24
+Астрахан 24
+Башкортостан 24
+# Белгород 24   <- http-only, cannot play on an https site
+# Ветта 24   <- http-only, cannot play on an https site
+Волгоград 24 Ⓢ
+Запад 24
+Катунь 24 Ⓞ
+Крым 24
+Кубань 24 Ⓞ
+Луганск 24
+# Мир Белогорья   <- http-only, cannot play on an https site
+Москва 24
+Нижний Новгород 24
+Самара 24
+Саратов 24
+Сибирь 24
+Тольятти 24
+Урал 24
+Якутия 24
+360 Новости
+Вести ФМ
+Небеса ТВ7 Ⓢ
+Север
+Смотрим: Мелодрамы
+Смотрим: Тайны
+Смотрим: Честный Детектив
+Соловьёв Live
+Ю Ⓢ
+# Матч! Планета Ⓢ   <- http-only, cannot play on an https site
+
+## UK  (52)
+BBC One Ⓖ
+BBC Two Ⓖ
+# ITV 1   <- http-only, cannot play on an https site
+STV Ⓖ
+S4C Ⓖ
+# Channel 5 Ⓢ   <- http-only, cannot play on an https site
+# ITV 2   <- http-only, cannot play on an https site
+BBC Alba Ⓖ
+BBC Four Ⓖ
+BBC Scotland Ⓢ Ⓖ
+# ITV 3   <- http-only, cannot play on an https site
+QVC UK Ⓢ
+TJC
+BBC Three Ⓖ
+# ITV 4   <- http-only, cannot play on an https site
+Great! Movies Ⓢ
+GemsTV Ⓢ
+Great! Romance Ⓢ
+Blaze Ⓖ
+TBN UK Ⓢ
+True Crime Ⓢ
+Jewellery Maker
+Hobby Maker
+# Talking Pictures TV Ⓢ   <- http-only, cannot play on an https site
+# Together TV Ⓢ   <- http-only, cannot play on an https site
+CBBC Ⓖ
+CBeebies Ⓖ
+Pop Ⓢ
+BBC Parliament Ⓢ Ⓖ
+Sky News Ⓖ
+GB News
+TalkTV
+Bloomberg TV
+NHK World Japan
+# Arirang World   <- http-only, cannot play on an https site
+QVC Beauty Ⓢ
+QVC Extra Ⓢ
+QVC Style Ⓢ
+Now 70s
+Now 80s
+Now Rock
+BBC Radio 1
+BBC Radio 2
+BBC Radio 3
+BBC Radio 4
+BBC Radio 5 Live
+BBC Radio 6 Music
+BBC Radio 1Xtra
+BBC Radio 4 Extra
+BBC Radio 5 Sports Extra
+BBC Asian Network
+# BBC World Service   <- http-only, cannot play on an https site
+
+## 日本 / Japan  (51)
+NHK総合 (東京)
+NHK Eテレ（東京）
+日本テレビ
+テレビ朝日
+TBSテレビ
+テレビ東京
+フジテレビ
+NHK BS
+# NHK BSP4K   <- not a stream URL
+BS日テレ
+BS朝日
+BS-TBS
+BSテレ東
+BSフジ
+# WOWOWプライム   <- not a stream URL
+# WOWOWライブ   <- not a stream URL
+# WOWOWシネマ   <- not a stream URL
+BS10
+BS10スターチャンネル
+# アニマックス   <- not a stream URL
+# J SPORTS 1   <- not a stream URL
+# J SPORTS 2   <- not a stream URL
+# J SPORTS 3   <- not a stream URL
+# J SPORTS 4   <- not a stream URL
+釣りビジョン
+日本映画専門チャンネル
+ショップチャンネル
+東映チャンネル
+チャンネルNECO
+ムービープラス
+GAORA
+日テレジータス
+ゴルフネットワーク
+時代劇専門チャンネル
+ファミリー劇場
+ホームドラマチャンネル
+チャンネル銀河
+スーパー！ドラマTV
+アクションチャンネル
+Dlife
+LaLa TV
+Mnet
+Music ON TV!（エムオン）
+歌謡ポップスチャンネル
+キッズステーション
+日テレNEWS24
+囲碁・将棋チャンネル
+GSTV
+NHK WORLD JAPAN
+ウェザーニュースLiVE
+TOKYO MX チャンネル
+
+## Spain  (51)
+La 1
+La 2
+24h
+tdp
+clan
+TVE Internacional Europe-Asia
+# Atreseries Ⓢ   <- http-only, cannot play on an https site
+Divinity Ⓖ
+Energy Ⓖ
+Be Mad Ⓖ
+Paramount Network
+RNE para todos
+euronews
+El País
+Negocios
+Squirrel
+BOM Cine
+# Antena 3   <- http-only, cannot play on an https site
+Cuatro
+Telecinco
+# La Sexta   <- http-only, cannot play on an https site
+# Neox Ⓢ   <- http-only, cannot play on an https site
+# Nova Ⓢ   <- http-only, cannot play on an https site
+# Mega Ⓢ   <- http-only, cannot play on an https site
+FDF
+Boing
+Telemadrid
+La Otra
+Canal Sur Andalucía
+# La 7 CYLTV   <- http-only, cannot play on an https site
+La 8 Mediterráneo
+Televisión Canaria Ⓨ
+# IB3 Global Ⓨ   <- links to a web page, not a stream
+Canal Extremadura
+Aragón TV Ⓢ
+ETB1
+ETB2
+TV3Cat Ⓖ
+3/24
+Bon Dia
+SX3 Ⓖ
+El 33 Ⓖ
+Esport3 Ⓖ
+Canal TE24
+À Punt TV
+7 Región de Murcia Ⓢ
+Canal 4 Tenerife
+La 1 (Catalunya)
+La 1 (Canarias)
+La 2 (Catalunya)
+La 2 (Canarias)
+
 ## Sports  (46)
 T Sports Live 01
 T Sports Live 01 (1)
@@ -131,7 +984,808 @@ Fox Cricket 501 HD
 Sony Sports3
 # Star Sports 1 HD   <- http-only, cannot play on an https site
 
-## Unknown  (19)
+## Hungary  (46)
+# M1 Ⓖ   <- http-only, cannot play on an https site
+# M1 Hiradó Ⓨ   <- links to a web page, not a stream
+# M2 / Petőfi TV Ⓖ   <- http-only, cannot play on an https site
+# M5 Hungary Ⓖ   <- http-only, cannot play on an https site
+# Duna TV Ⓖ   <- http-only, cannot play on an https site
+# RTL Klub   <- http-only, cannot play on an https site
+# TV2   <- http-only, cannot play on an https site
+# ATV   <- http-only, cannot play on an https site
+# Spektrum Home   <- http-only, cannot play on an https site
+# ErdélyTV Ⓨ   <- links to a web page, not a stream
+# FEM3 (TV2 Klub)   <- http-only, cannot play on an https site
+# Viasat 6   <- http-only, cannot play on an https site
+Apostol TV
+Oxygen Music
+Dance TV
+# Radio 1 Ⓨ   <- links to a web page, not a stream
+# DikhTv Ⓨ   <- links to a web page, not a stream
+# Izaura TV   <- http-only, cannot play on an https site
+# Euronews Hungarian Ⓨ   <- links to a web page, not a stream
+Parlamenti közvetítés
+Parlamenti TAB közvetítés
+Balaton TV
+Komlos TV
+# Ózdi Városi TV   <- http-only, cannot play on an https site
+TV7 Békéscsaba
+16TV
+CityTV (Belváros Lipótváros)
+FehérvárTV
+Gyöngyös TV
+# Halom TV   <- not a stream URL
+# Kecskemét TV   <- http-only, cannot play on an https site
+Zalaegerszeg TV
+# DTV   <- http-only, cannot play on an https site
+Vásárhelyi Televízió
+# TV Eger   <- http-only, cannot play on an https site
+Oroszlányi Városi Televízió
+Berente TV
+Budapest Európa TV
+Héviz TV
+Jászsági Térségi TV
+Kanizsa TV
+# Líceum TV   <- http-only, cannot play on an https site
+Pannon RTV
+# Hegyvidék TV (Buda TV)   <- http-only, cannot play on an https site
+# Duna World / M4+ Sport   <- http-only, cannot play on an https site
+# Putnok Városi TV   <- http-only, cannot play on an https site
+
+## Ukraine  (46)
+Pershyi
+# 1+1 Ukraina Ⓢ   <- http-only, cannot play on an https site
+# Suspilne Kultura   <- http-only, cannot play on an https site
+# Suspilne Sport   <- http-only, cannot play on an https site
+# ICTV2   <- http-only, cannot play on an https site
+# ICTV Serialy   <- http-only, cannot play on an https site
+# Inter   <- http-only, cannot play on an https site
+Армія ТБ
+# Novyi Kanal   <- http-only, cannot play on an https site
+# TET Ⓢ   <- http-only, cannot play on an https site
+# 2+2 Ⓢ   <- http-only, cannot play on an https site
+# M1   <- http-only, cannot play on an https site
+# M2   <- http-only, cannot play on an https site
+NTN
+# ПлюсПлюс Ⓢ   <- http-only, cannot play on an https site
+# K1   <- http-only, cannot play on an https site
+# XSport Ⓢ   <- http-only, cannot play on an https site
+# Enter-Film   <- http-only, cannot play on an https site
+Піксель TV
+# 5 Kanal   <- http-only, cannot play on an https site
+Суспільне Київ
+# Суспільне Дніпро   <- http-only, cannot play on an https site
+# Суспільне Житомир Ⓢ   <- http-only, cannot play on an https site
+# Суспільне Одеса Ⓢ   <- http-only, cannot play on an https site
+# Суспільне Суми Ⓢ   <- http-only, cannot play on an https site
+# Суспільне Хмельницький Ⓢ   <- http-only, cannot play on an https site
+# Суспільне Чернівці Ⓢ   <- http-only, cannot play on an https site
+# Суспільне Kropyvnytskyi   <- http-only, cannot play on an https site
+# Суспільне Луцьк   <- http-only, cannot play on an https site
+Суспільне Крим
+# Суспільне Тернопіль   <- http-only, cannot play on an https site
+# Суспільне Чернігів   <- http-only, cannot play on an https site
+# FREEДOM   <- http-only, cannot play on an https site
+# 24 Kanal   <- http-only, cannot play on an https site
+ДІМ
+# Дніпро TV   <- http-only, cannot play on an https site
+ГІТ
+Telekanal RAI
+Тернопіль 1
+# CK 1   <- http-only, cannot play on an https site
+Pervyy gorodskoy Odessa
+Київ 24
+# ITV   <- http-only, cannot play on an https site
+# NTK TV   <- http-only, cannot play on an https site
+TVA
+TV7+
+
+## Mongolia  (40)
+MNB HD
+MNB Монголын Мэдээ
+MNB Sport
+MNB International
+MNB Гэр бүл
+MN25
+TV5
+TV8 HD
+TV9
+Eagle News HD
+UBS (720p)
+SBN
+C1
+Central HD
+MovieBox
+CNBC MGL
+AsianBox
+Education TV
+ETV
+N Sports
+Channel 11
+Gandan TV
+Soyon Geegerulch
+Tanin Mehehgui TV
+TenGer TV (720p)
+UlZii
+Malchin TV
+Parliament TV
+Star TV
+Suld TV
+Seven Channel
+Aist Global
+MNC
+Bantan
+Auto TV (720p)
+Bloomberg TV Mongolia HD (720p)
+Cinema
+Mongolian Plus1
+Mongolia Music
+# Mongol TV Ⓨ   <- links to a web page, not a stream
+
+## Czech Republic  (38)
+# ČT1   <- http-only, cannot play on an https site
+# ČT2   <- http-only, cannot play on an https site
+# ČT24   <- http-only, cannot play on an https site
+# ČT sport   <- http-only, cannot play on an https site
+ČT :D
+# ČT art   <- http-only, cannot play on an https site
+ČT sport Plus
+TV Nova Ⓢ
+Nova Cinema
+Nova Action
+Nova Fun
+Nova Gold
+Nova Lady
+TN Live
+# Prima   <- http-only, cannot play on an https site
+CNN Prima News
+# Prima Zoom   <- http-only, cannot play on an https site
+# Prima Love   <- http-only, cannot play on an https site
+# Prima STAR   <- http-only, cannot play on an https site
+Prima Krimi
+Prima MAX
+# Prima Cool   <- http-only, cannot play on an https site
+# Prima Show   <- http-only, cannot play on an https site
+JOJ Family Ⓢ
+JOJ Cinema
+CS Film
+CS History
+CS Mystery
+Óčko Ⓢ
+Óčko Star Ⓢ
+Óčko Expres Ⓢ
+Šlágr Originál Ⓢ
+Šlágr Muzika Ⓢ
+Šlágr Premium Ⓢ
+Retro Music TV Ⓢ
+Praha TV
+Východoceská TV
+UTV
+
+## Germany  (35)
+Das Erste Ⓖ
+# ZDF Ⓖ   <- http-only, cannot play on an https site
+3sat Ⓖ
+ARD Alpha Ⓖ
+ARTE Ⓖ
+DELUXE MUSIC
+DELUXE MUSIC DANCE BY KONTOR
+DELUXE MUSIC RAP
+SCHLAGER DELUXE
+# Euronews Deutsch Ⓨ   <- links to a web page, not a stream
+KiKa Ⓖ
+ONE Ⓖ
+Phoenix Ⓖ
+Tagesschau24
+Welt
+ZDFinfo Ⓖ
+ZDFneo Ⓖ
+BR Nord Ⓖ
+BR Süd Ⓖ
+HR Ⓖ
+MDR Sachsen Ⓖ
+MDR Sachsen-Anhalt Ⓖ
+MDR Thüringen Ⓖ
+NDR Hamburg Ⓖ
+NDR Mecklenburg-Vorpommern Ⓖ
+NDR Niedersachsen Ⓖ
+NDR Schleswig-Holstein Ⓖ
+Radio Bremen Ⓖ
+RBB Berlin Ⓖ
+RBB Brandenburg Ⓖ
+SR Ⓖ
+SWR Baden-Württemberg Ⓖ
+SWR Rheinland-Pfalz Ⓖ
+WDR Ⓖ
+NDR International
+
+## United Arab Emirates  (35)
+Cartoon Network Arabic
+Al Arabiya Business
+MBC 1
+# MBC 2 Ⓢ   <- http-only, cannot play on an https site
+MBC 3
+MBC 4
+MBC 5
+# MBC Action Ⓢ   <- http-only, cannot play on an https site
+MBC Bollywood
+MBC Drama
+# MBC Max Ⓢ   <- http-only, cannot play on an https site
+MBC Persia
+Wanasah
+Sky News Arabia
+Baynounah TV
+Ajman TV
+Al Aan TV
+# Abu Dhabi TV   <- http-only, cannot play on an https site
+Abu Dhabi Sports 1
+Abu Dhabi Sports 2
+National Geographic Abu Dhabi
+Dubai TV
+Dubai One
+Dubai Sports 1
+Dubai Sports 2
+Dubai Sports 3
+Dubai Racing 1
+Dubai Racing 2
+Dubai Racing 3
+Dubai Zaman
+Sama Dubai
+Noor Dubai
+Sharjah TV
+Sharjah Sports
+Al Wousta
+
+## France  (32)
+Arte Ⓖ
+LCP
+Public Sénat
+# CNews Ⓓ   <- links to a web page, not a stream
+# franceinfo: Ⓨ   <- links to a web page, not a stream
+# France 24 Ⓨ   <- links to a web page, not a stream
+# Euronews Français Ⓨ   <- links to a web page, not a stream
+# Africanews Ⓨ   <- links to a web page, not a stream
+# L'Équipe ⒹⒼ   <- links to a web page, not a stream
+# France Inter Ⓨ   <- links to a web page, not a stream
+CGTN Français
+# TV Mulhouse   <- http-only, cannot play on an https site
+# TV Alsace   <- http-only, cannot play on an https site
+Handicap TV
+# TF1   <- http-only, cannot play on an https site
+# France 3   <- http-only, cannot play on an https site
+# France 4   <- http-only, cannot play on an https site
+# France 5   <- http-only, cannot play on an https site
+# TMC   <- http-only, cannot play on an https site
+# TFX   <- http-only, cannot play on an https site
+TV5 Monde Info
+TV5 Monde FBS
+TV5 Monde Europe
+BFM TV
+# Gulli   <- http-only, cannot play on an https site
+# 6ter   <- http-only, cannot play on an https site
+# LCI   <- http-only, cannot play on an https site
+# M6   <- http-only, cannot play on an https site
+# W9   <- http-only, cannot play on an https site
+# CStar   <- http-only, cannot play on an https site
+# L'Équipe Ⓨ   <- links to a web page, not a stream
+# RMC Life (ex-Chérie 25)   <- http-only, cannot play on an https site
+
+## India  (32)
+NDTV India
+ABP News
+ABP Ananda
+# DD National Ⓨ   <- links to a web page, not a stream
+# DD News Ⓨ   <- links to a web page, not a stream
+# DD India Ⓨ   <- links to a web page, not a stream
+# DD Bharati Ⓨ   <- links to a web page, not a stream
+# DD Kisan Ⓨ   <- links to a web page, not a stream
+# DD Urdu Ⓨ   <- links to a web page, not a stream
+# India Today Ⓨ   <- links to a web page, not a stream
+# Aaj Tak Ⓨ   <- links to a web page, not a stream
+# India TV Ⓨ   <- links to a web page, not a stream
+# TV9 Bharatvarsh Ⓨ   <- links to a web page, not a stream
+TV9 Kannada
+TV9 Telugu
+TV9 Marathi
+# Republic Bharat Ⓨ   <- links to a web page, not a stream
+NDTV Profit
+# Asianet News Ⓨ   <- links to a web page, not a stream
+# Asianet Suvarna News Ⓨ   <- links to a web page, not a stream
+# Asianet News Telugu Ⓨ   <- links to a web page, not a stream
+News18 India Ⓨ
+CNN-News18
+# News18 UP Uttarakhand Ⓨ   <- links to a web page, not a stream
+News18 Kannada
+# News18 Telugu Ⓨ   <- links to a web page, not a stream
+# News18 Marathi Ⓨ   <- links to a web page, not a stream
+# WION Ⓨ   <- links to a web page, not a stream
+# Mirror Now Ⓨ   <- links to a web page, not a stream
+# ZEE News Ⓨ   <- links to a web page, not a stream
+# News24 Ⓨ   <- links to a web page, not a stream
+# Good News Today Ⓨ   <- links to a web page, not a stream
+
+## North Macedonia  (31)
+MRT1 Ⓖ
+MRT2 Ⓖ
+MRT Sobraniski kanal Ⓖ
+MRT3 Ⓖ
+MRT4 Ⓖ
+MRT5 Ⓖ
+Kanal 5 Ⓢ Ⓖ
+Alsat M Ⓢ Ⓖ
+Sitel Ⓢ Ⓖ
+MRT Sat
+MRT 2 Sat
+TV 21 Ⓢ Ⓖ
+# Телевизија Здравкин   <- http-only, cannot play on an https site
+# Орбис   <- http-only, cannot play on an https site
+# M»Net   <- http-only, cannot play on an https site
+# M»Net Sport   <- http-only, cannot play on an https site
+# M»Net Info   <- http-only, cannot play on an https site
+MTM 1 Скопска Ⓖ
+# ТВ НОВА 12   <- http-only, cannot play on an https site
+ЗОНА М1 ТВ
+Наша ТВ
+Cool TV
+Folk TV
+Jazz TV
+Love TV
+Rock TV
+Sky Folk
+# Хуго 2   <- http-only, cannot play on an https site
+# Folk Club TV   <- http-only, cannot play on an https site
+# INTV   <- http-only, cannot play on an https site
+Вистел
+
+## News  (31)
+# Sky News (UK) Ⓨ   <- links to a web page, not a stream
+# Euronews Ⓨ   <- links to a web page, not a stream
+DW
+Al Jazeera
+CGTN
+BBC News Ⓖ
+NBC News NOW
+Reuters
+The Guardian
+ABC News Live
+LiveNOW from FOX
+CBC News Network
+Ticker News
+India Today
+# Channel News Asia Ⓨ   <- links to a web page, not a stream
+# ABC News (AU) Ⓨ   <- links to a web page, not a stream
+# NDTV 24x7 Ⓨ   <- links to a web page, not a stream
+# TRT World Ⓨ   <- links to a web page, not a stream
+# NHK World Japan Ⓨ   <- links to a web page, not a stream
+Taiwan+
+Metro Globe Network
+i24 News
+Scripps News
+USA Today
+# Channels 24 Ⓨ   <- links to a web page, not a stream
+Sky News Now (AU)
+Russia Today Ⓖ
+CNN International
+# GB News Ⓨ   <- links to a web page, not a stream
+# Joy News Ⓨ   <- links to a web page, not a stream
+SABC News
+
+## Finland  (29)
+Yle TV1 Ⓖ
+Yle TV2 Ⓖ
+MTV3
+Nelonen
+Yle Teema Fem Ⓖ
+MTV Sub
+TV5 Finland
+Liv
+Jim
+Kutonen
+TLC Finland
+Star Channel Finland
+MTV Ava
+Hero
+Frii
+Alfa Ⓢ
+TapahtumaTV Eveo
+National Geographic Finland Ⓖ
+Viaplay TV
+OnniTV
+Taivas TV7
+Himlen TV7
+MTV Uutiset Live
+Nopola News
+När-TV Ⓢ
+# Sundom TV Ⓨ   <- links to a web page, not a stream
+# Wör TV Ⓨ   <- links to a web page, not a stream
+YleX Studio Live
+Järviradio TV
+
+## China  (27)
+# CCTV-1 综合   <- http-only, cannot play on an https site
+# CCTV-2 财经   <- http-only, cannot play on an https site
+# CCTV-3 综艺   <- http-only, cannot play on an https site
+# CCTV-4 中文国际（亚）   <- http-only, cannot play on an https site
+CCTV-4 中文国际（欧）
+CCTV-4 中文国际（美） Ⓢ
+CCTV-5 体育
+CCTV-5+ 体育赛事
+# CCTV-6 电影   <- http-only, cannot play on an https site
+# CCTV-7 国防军事   <- http-only, cannot play on an https site
+# CCTV-8 电视剧   <- http-only, cannot play on an https site
+# CCTV-9 纪录   <- http-only, cannot play on an https site
+# CCTV-10 科教   <- http-only, cannot play on an https site
+# CCTV-11 戏曲   <- http-only, cannot play on an https site
+# CCTV-12 社会与法   <- http-only, cannot play on an https site
+# CCTV-13 新闻   <- http-only, cannot play on an https site
+# CCTV-14 少儿   <- http-only, cannot play on an https site
+# CCTV-16 奥林匹克   <- http-only, cannot play on an https site
+# CCTV-17 农业农村   <- http-only, cannot play on an https site
+# CETV-1   <- http-only, cannot play on an https site
+# CETV-2   <- http-only, cannot play on an https site
+# CETV-3   <- http-only, cannot play on an https site
+# CETV-4   <- http-only, cannot play on an https site
+# FZTV-1 News 新闻综合频道   <- http-only, cannot play on an https site
+# FZTV-3 Lifestyle Channel 生活频道   <- http-only, cannot play on an https site
+# FZTV-4 Children 少儿频道   <- http-only, cannot play on an https site
+TV BRICS Chinese
+
+## USA  (27)
+# Buzzr Ⓖ   <- http-only, cannot play on an https site
+Retro TV
+Stadium
+Biz TV
+Heartland
+Rev'n
+CNN
+# CNBC Ⓨ   <- links to a web page, not a stream
+Bloomberg
+CBS News
+NBC News
+Reuters TV
+NASA TV Public
+NASA TV Media
+BBC Food
+BBC Home
+Docurama
+Drybar Comedy
+# Music Channel   <- http-only, cannot play on an https site
+Stryk TV
+FOX Live Now
+Cheddar
+Court TV
+WeatherNation
+America's Voice
+Newsmax TV
+America TeVe
+
+## Argentina  (26)
+# TN Todo Noticias Ⓨ   <- links to a web page, not a stream
+# Encuentro Ⓨ Ⓖ   <- links to a web page, not a stream
+# Pakapaka Ⓨ Ⓖ   <- links to a web page, not a stream
+Aunar
+Cine.AR
+Tec TV
+# Televisión Pública Ⓨ   <- links to a web page, not a stream
+DeporTV
+Canal 26
+# Crónica TV Ⓨ   <- links to a web page, not a stream
+# Argentina 12 Ⓨ   <- links to a web page, not a stream
+# El Destape Ⓨ   <- links to a web page, not a stream
+# C5N Ⓨ   <- links to a web page, not a stream
+# LN+ Ⓨ   <- links to a web page, not a stream
++Perfil
+Telemax
+Net TV
+TV Universidad
+# Barricada TV   <- links to a web page, not a stream
+# Urbana Tevé   <- links to a web page, not a stream
+# Comarca TV   <- links to a web page, not a stream
+El Trece
+# El Nueve   <- http-only, cannot play on an https site
+Telefe Ⓨ
+América
+# A24 Ⓨ   <- links to a web page, not a stream
+
+## Iran  (26)
+IRIB TV1
+IRIB TV2
+IRIB TV3
+IRIB TV4 Ⓢ
+IRIB TV5/Tehran TV Ⓢ
+# IRINN   <- http-only, cannot play on an https site
+IRIB Amoozesh Ⓢ
+IRIB Quran
+IRIB Mostanad
+IRIB Namayesh
+IRIB Ofogh
+IRIB Varzesh
+IRIB Pooya & Nahal
+IRIB Salamat Ⓢ
+IRIB Nasim
+IRIB Omid Ⓢ
+IRIB Tamasha
+iFilm
+IRIB UHD-HDR
+iFilm 2 Ⓢ
+iFilm Arabic Ⓢ
+iFilm English Ⓢ
+Al-Alam News Network Ⓢ
+Press TV
+Press TV French
+IranPress Ⓢ
+
+## Croatia  (25)
+HRT 1
+HRT 2
+RTL
+HRT 3
+# HRT 4 Ⓖ   <- DASH stream, this player only handles HLS
+RTL 2
+Sportska televizija Ⓖ
+RTL Kockica
+CMC TV
+Plava Vinkovačka
+# Televizija Slavonije i Baranje (STV)   <- http-only, cannot play on an https site
+Osječka televizija (OSTV) Ⓢ
+SBTV
+OTV
+# Z1 Ⓨ   <- links to a web page, not a stream
+Kanal Ri
+TV Nova
+Diadora
+TV Jadran
+# TV Dalmacija Ⓨ   <- links to a web page, not a stream
+Libertas TV
+# Trend TV   <- http-only, cannot play on an https site
+# Televizija Zapad   <- http-only, cannot play on an https site
+Al Jazeera Balkans
+# N1 Hrvatska Ⓨ   <- links to a web page, not a stream
+
+## VOD Movies (EN)  (25)
+# FilmRise Movies   <- http-only, cannot play on an https site
+# FilmRise Sci-Fi   <- http-only, cannot play on an https site
+# Pluto TV Spotlight   <- http-only, cannot play on an https site
+# Pluto TV Action   <- http-only, cannot play on an https site
+# Pluto TV Comedy   <- http-only, cannot play on an https site
+# Pluto TV Drama   <- http-only, cannot play on an https site
+# Pluto TV Fantastic   <- http-only, cannot play on an https site
+# Pluto TV Romance   <- http-only, cannot play on an https site
+# Pluto TV Crime Movies   <- http-only, cannot play on an https site
+# Pluto TV Thrillers   <- http-only, cannot play on an https site
+# Pluto TV Horror   <- http-only, cannot play on an https site
+# Pluto TV Terror   <- http-only, cannot play on an https site
+# Black Cinema   <- http-only, cannot play on an https site
+# Pluto TV Staff Picks   <- http-only, cannot play on an https site
+# Pluto TV Documentaries   <- http-only, cannot play on an https site
+# 90s Throwback   <- http-only, cannot play on an https site
+# 80s Rewind   <- http-only, cannot play on an https site
+# 70s Cinema   <- http-only, cannot play on an https site
+# Paramount Movie Channel   <- http-only, cannot play on an https site
+# Pluto TV Westerns   <- http-only, cannot play on an https site
+# Classic Movies   <- http-only, cannot play on an https site
+# Pluto TV Cult Films   <- http-only, cannot play on an https site
+# Flicks of Fury   <- http-only, cannot play on an https site
+# The Asylum   <- http-only, cannot play on an https site
+Film Detective
+
+## Chile  (24)
+UCV Televisión
+TVN Ⓖ
+24 horas
+NTV Ⓖ
+TV Chile Ⓖ
+Canal 13
+TV+
+Chilevisión Ⓖ
+UChile TV
+T13 en vivo
+13 Entretención
+13 Cultura
+13 Prime
+13 Kids
+13 Realities
+13 Teleseries
+El Pingüino TV
+UCL
+Deportes13 Ⓖ
+TVN 3
+Chilevisión Noticias
+SoloTV
+Mega
+Bio Bio TV
+
+## Korea  (22)
+# KBS 1TV   <- http-only, cannot play on an https site
+EBS 1 Ⓢ
+EBS 2 Ⓢ
+# MBC TV Ⓨ   <- links to a web page, not a stream
+SBS TV
+# KNN TV   <- http-only, cannot play on an https site
+KBC TV
+# TJB TV   <- http-only, cannot play on an https site
+UBC TV
+JTV TV
+# CJB TV   <- http-only, cannot play on an https site
+# G1 TV   <- http-only, cannot play on an https site
+# JIBS TV   <- http-only, cannot play on an https site
+OBS TV
+# Arirang   <- http-only, cannot play on an https site
+EBS Kids Ⓢ
+EBS Plus 1 Ⓢ
+EBS Plus 2 Ⓢ
+EBS English Ⓢ
+# KBS World Ⓨ   <- links to a web page, not a stream
+# KBS Korea Ⓨ   <- links to a web page, not a stream
+# All the K-Pop Ⓨ   <- links to a web page, not a stream
+
+## Australia  (20)
+10 HD
+ABC
+Seven
+Nine
+10 Peach
+10 Bold
+10 Shake
+TVSN
+ABC Kids
+ABC Me
+ABC News
+M4TV
+7two
+7mate
+7flix
+Racing.com
+9Gem Ⓖ
+9Go! Ⓖ
+9Life Ⓖ
+9Rush Ⓖ
+
+## Canada  (20)
+CBC Toronto Ⓖ
+# CTV Toronto   <- http-only, cannot play on an https site
+# CTV 2   <- http-only, cannot play on an https site
+# NTV   <- http-only, cannot play on an https site
+# CHCH   <- http-only, cannot play on an https site
+CBC News
+# CTV News Ⓨ   <- links to a web page, not a stream
+Global News
+Global News Saskatoon
+Global News Winnipeg
+CPAC (EN)
+ICI RDI
+ICI Télé HD Ⓖ
+TVA Ⓖ
+# Noovo   <- DASH stream, this player only handles HLS
+Télé Québec
+Savoir Média
+CPAC (FR)
+ICI Montreal
+# Toronto 360 TV   <- http-only, cannot play on an https site
+
+## Slovakia  (20)
+Markíza
+Doma
+Dajto
+Krimi
+Klasik
+Markíza TN Live
+JOJ
+JOJ Plus
+Wau
+JOJ 24
+JOJ Šport
+Jojko
+Jednotka
+Dvojka
+STVR :24
+Šport
+STVR :O
+NR SR
+STVR Live
+TA3
+
+## Somalia  (19)
+# Banaadir TV Ⓨ   <- links to a web page, not a stream
+# Bulsho TV Ⓨ   <- links to a web page, not a stream
+Dacwa TV Ⓢ
+# Galmudug TV Ⓨ   <- links to a web page, not a stream
+Hirshabelle TV
+# Horn Cable TV Ⓨ   <- links to a web page, not a stream
+# Jubbaland TV Ⓨ   <- links to a web page, not a stream
+# KGS TV Ⓨ   <- links to a web page, not a stream
+# MM Somali TV Ⓨ   <- links to a web page, not a stream
+# Puntland TV Ⓢ   <- http-only, cannot play on an https site
+# Rejo TV Ⓨ   <- links to a web page, not a stream
+Saab TV Ⓢ
+# Sahan TV Ⓨ   <- links to a web page, not a stream
+# SBC Somalia Ⓢ   <- http-only, cannot play on an https site
+# Shabelle TV Ⓨ   <- links to a web page, not a stream
+SNTV Daljir Ⓢ
+Somali Cable TV Ⓢ
+Somali National TV Ⓢ
+# Somaliland National TV Ⓨ   <- links to a web page, not a stream
+
+## Belarus  (18)
+Первый Информацыйнный
+Беларусь 1
+Беларусь 2
+Беларусь 3
+ОНТ Ⓢ
+Беларусь 5
+СТВ
+Беларусь 24
+Беларусь 5 Интернет
+# 1Mus   <- http-only, cannot play on an https site
+# 8 Kanal Vitebsk Ⓢ   <- http-only, cannot play on an https site
+Belros Ⓢ
+Belarus 4 Vitebsk Ⓢ
+# Hawe TV Vitebsk Ⓢ   <- http-only, cannot play on an https site
+# Pervyy Muzykal'nyy BY Ⓢ   <- http-only, cannot play on an https site
+Planeta RTR Ⓢ
+# Radio HIT Orsk   <- http-only, cannot play on an https site
+Vitebsk Telekanal
+
+## Bosnia and Herzegovina  (18)
+BHT 1
+BHT 1 Ⓢ
+# Federalna televizija (FTV) Ⓢ   <- http-only, cannot play on an https site
+Televizija Republike Srpske (RTRS)
+RTRS PLUS Ⓢ
+N1 Bosna i Hercegovina
+RTV HB Ⓢ
+RTV BN
+# RTV Glas Drine   <- http-only, cannot play on an https site
+Sevdah Ⓢ
+TNT Kids
+Televizija 5
+Kanal 6
+SuperTV
+# Neon TV   <- not a stream URL
+# RTV USK Ⓨ   <- links to a web page, not a stream
+RTV ZE Ⓢ
+# TV BPK Ⓢ   <- http-only, cannot play on an https site
+
+## Ireland  (18)
+TG4
+Houses of the Oireachtas Channel
+Today FM
+98FM
+FM104
+Radio Nova
+Spin 103.8
+Newstalk
+Dublin's Q102
+Classic Hits
+Sunshine 106.8
+RTÉ One
+RTÉ2
+Virgin Media 1
+Virgin Media 2
+Virgin Media 3
+Virgin Media 4
+RTE News
+
+## Albania  (17)
+Kanali 7 Ⓢ
+A2 CNN Albania
+# ABC News Albania Ⓣ   <- links to a web page, not a stream
+AlbKanale Music TV Ⓢ
+Alpo TV
+CNA
+# Euronews Albania Ⓨ   <- links to a web page, not a stream
+News 24 Ⓢ
+Ora News
+# Panorama TV Ⓢ   <- http-only, cannot play on an https site
+Report TV
+Syri
+# Top News Ⓣ   <- links to a web page, not a stream
+Tropoja
+TV 7 Albania
+TV Apollon Ⓢ
+Vizion Plus
+
+## Unknown  (16)
 Deshi TV (720p)
 Ananda TV
 ATN Music (360p)
@@ -141,16 +1795,66 @@ My TV
 Green TV (1080p)
 RTV (720p)
 Boishakhi TV
-# RTV (720p)   <- http-only, cannot play on an https site
 # Maasranga TV (720p)   <- http-only, cannot play on an https site
 Rajdhani TV (1080p)
-Maasranga TV (720p)
-RTV (720p)
 Duronto TV (720p)
 T Sports (1080p)
 NTV (720p)
 Nexus TV (576p)
 YRF Music HD
+
+## Sweden  (16)
+# SVT 1 Ⓖ   <- DASH stream, this player only handles HLS
+# SVT 2 Ⓖ   <- DASH stream, this player only handles HLS
+ATG Live Ⓢ
+Expressen TV
+Kanal 10 Sverige
+# SVT 24 Ⓖ   <- DASH stream, this player only handles HLS
+# Kunskapskanalen Ⓖ   <- DASH stream, this player only handles HLS
+Di TV
+Öppna Kanalen Stockholm Ⓢ
+Öppna Kanalen Malmö Ⓢ
+Västmanlands TV
+Sundskanalen
+Öppna Kanalen Skövde
+# Lokal-TV Uddevalla / Fyrbodal-TV Ⓨ   <- links to a web page, not a stream
+Aryen TV
+Suryoyo Sat
+
+## Turkey  (16)
+TRT 1
+TRT 2 Ⓖ
+TRT Haber
+TRT Spor Ⓖ
+TRT Spor 2 Ⓖ
+TRT Çocuk
+TRT Müzik
+TRT Belgesel
+TRT Avaz
+TRT Kurdî
+TRT Arabi
+TRT World
+TRT Türk
+TRT EBA Ilkokul
+TRT EBA Ortaokul
+TRT EBA Lise
+
+## Portugal  (15)
+RTP1
+RTP2 Ⓖ
+RTP3
+SIC
+TVI
+RTP Açores
+RTP Madeira Ⓢ
+RTP notícias
+RTP Memória
+RTP Mundo
+Porto Canal Ⓢ
+ADtv Ⓢ
+CNN Portugal
+RTP África
+# Euronews em Português Ⓨ   <- links to a web page, not a stream
 
 ## NEWS INTERNASIONAL  (14)
 DW NEWS
@@ -168,27 +1872,364 @@ NDTV NEWS
 RT News (EN)
 RT NEWS USA
 
-## ISLAMIC CHANNELS  (11)
-Unnamed
+## Iraq  (14)
+Al-Hurra Iraq
+Al-Hurra
+Al-Iraqiya
+Al-Rafidain
+Al-Rasheed
+Al-Sharqiya News
+Al-Sharqiya
+Dijlah Tarab
+Dijlah TV
+iNEWS
+Iraq Future Ⓢ
+Turkmeneli TV
+Zagros TV
+Alabbassia TV
+
+## Mexico  (14)
+# Alcarria TV   <- http-only, cannot play on an https site
+# Hipodromo de las Americas   <- http-only, cannot play on an https site
+# MVM NoticiasⓈ   <- http-only, cannot play on an https site
+# RCG 3 Saltillo   <- http-only, cannot play on an https site
+TeleFormula
+NRT 4 Monclova
+Las Estrellas
+ADN Noticias
+Canal 6 Multimedios
+Canal Once
+Quiero TV
+México Travel TV
+Estrella TV
+TELE 10 Nayarit
+
+## Romania  (14)
+TVR 1 Ⓖ
+TVR 2 Ⓖ
+TVR 3 Ⓖ
+TVR Info Ⓖ
+TVR International Ⓖ
+Pro TV
+România TV Ⓖ
+Telestar1
+# Euronews România Ⓨ   <- links to a web page, not a stream
+TVR Cluj Ⓖ
+TVR Craiova Ⓖ
+# TVR Iași Ⓖ   <- http-only, cannot play on an https site
+TVR Timișoara Ⓖ
+TVR Tîrgu-Mureș Ⓖ
+
+## Saudi Arabia  (14)
+Al Saudiya
+SBC Saudi Arabia
+Thikrayat
+Al Ekhbariya
+Al Saudiya Alaan
+Al Quran Al Kareem TV
+# Al Sunnah Al Nabawiyah TV   <- http-only, cannot play on an https site
+Rotana Cinema KSA
+Rotana Comedy
+Rotana Khalijia
+Rotana Drama
+Rotana Classic
+Rotana Ciip
+Rotana Music
+
+## Lebanon  (13)
+MTV Lebanon
+Tele Liban
+Al Manar
+Al Mayadeen
+Voice of Lebanon
+NourSAT
+Noursat English
+Nour Al Koddas
+Nour Al Sharq
+Aliman TV
+# Al Ittihad   <- http-only, cannot play on an https site
+# CharityTV   <- http-only, cannot play on an https site
+Falestinona Channel
+
+## Netherlands  (13)
+Omrop Fryslân
+RTV Noord
+RTV Drenthe
+RTV Oost
+Omroep Gelderland
+# RTV Utrecht   <- http-only, cannot play on an https site
+Omroep Flevoland Ⓢ
+NH Nieuws
+RTV Rijnmond
+Omroep West
+# Omroep Zeeland   <- http-only, cannot play on an https site
+# Omroep Brabant   <- http-only, cannot play on an https site
+# L1 Ⓢ   <- http-only, cannot play on an https site
+
+## Taiwan  (13)
+# CTV (中視) Ⓨ   <- links to a web page, not a stream
+# CTV News Channel (中視新聞台) Ⓨ   <- links to a web page, not a stream
+# PTS (公視主頻) Ⓨ   <- links to a web page, not a stream
+# PTS Taigi (公視台語台) Ⓨ Ⓖ   <- links to a web page, not a stream
+# TaiwanPlus Ⓨ   <- links to a web page, not a stream
+# 民視無線台   <- http-only, cannot play on an https site
+# FTV One (民視第一台)   <- http-only, cannot play on an https site
+# FTV News (民視新聞台) Ⓨ   <- links to a web page, not a stream
+# FTV Taiwan (民視台灣台)   <- http-only, cannot play on an https site
+# TTV Main Channel (臺灣電視台) Ⓨ Ⓖ   <- links to a web page, not a stream
+# TTV News (台視新聞台) Ⓨ   <- links to a web page, not a stream
+# Congress Channel 1 Ⓨ   <- links to a web page, not a stream
+# Congress Channel 2 Ⓨ   <- links to a web page, not a stream
+
+## Denmark  (12)
+DR1 Ⓖ
+DR2 Ⓖ
+DR Ramasjang Ⓖ
+Folketinget TV
+# TV Syd+   <- http-only, cannot play on an https site
+# TV 2/Fyn   <- http-only, cannot play on an https site
+# TV 2/Øst   <- http-only, cannot play on an https site
+# TV 2/Nord   <- http-only, cannot play on an https site
+# TV/Midt-Vest   <- http-only, cannot play on an https site
+# TV 2/Østjylland   <- http-only, cannot play on an https site
+TV 2/Bornholm
+# Kanal Hovedstaden   <- http-only, cannot play on an https site
+
+## Egypt  (12)
+Aghapy TV
+Al Ghad Plus
+Al Ghad TV
+Al Qahera News
+Alhayat TV
+Coptic TV
+Huda TV
+Koogi TV
+MBC Masr 1
+MBC Masr 2
+Rotana Cinema
+Watan TV
+
+## Nigeria  (12)
+Advocate Broadcasting Network
+# Channels TV Ⓨ   <- links to a web page, not a stream
+Itage TV
+News Central
+Rave TV
+Silverbird News 24
+# Soundcity TV Ⓨ   <- links to a web page, not a stream
+Superscreen TV
+# TVC News Ⓨ   <- links to a web page, not a stream
+Waffi TV
+Wazobia Max TV Nigeria
+Wazobia Max TV Port Harcourt
+
+## Qatar  (12)
+Qatar Television
+Qatar Television 2
+Qatar Television The Holy Quran
+Al Rayyan
+Al Rayyan Old TV
+Al Jazeera Mubasher
+Al Jazeera 2
+Alkass One
+Alkass Two
+Alkass Three
+Alkass Four
+Al Araby TV
+
+## Austria  (11)
+ORF 1 Ⓖ
+ORF 2 Ⓖ
+ORF III Ⓖ
+ORF Sport + Ⓖ
+Servus TV Ⓖ
+oe24
+W24
+# P3TV   <- http-only, cannot play on an https site
+RTS Ⓖ
+Tirol TV Ⓖ
+R9
+
+## Azerbaijan  (11)
+# AzStarTV   <- http-only, cannot play on an https site
+AZTV Ⓢ
+Baku TV
+CBC Sport Ⓖ
+Kanal S
+Mədəniyyət TV Ⓢ
+Xəzər Xəbər
+İctimai TV Ⓢ
+# Muz TV Ⓨ   <- links to a web page, not a stream
+# Real TV Ⓨ   <- links to a web page, not a stream
+# MTV Azerbaijan Ⓢ Ⓨ   <- links to a web page, not a stream
+
+## Brazil  (11)
+COM Brasil
+# SBT Ⓨ   <- links to a web page, not a stream
+# AgroBrasil TV   <- http-only, cannot play on an https site
+# Futura   <- http-only, cannot play on an https site
+# RBC Ⓨ   <- links to a web page, not a stream
+Record News
+ISTV
+Rede Brasil
+TV Câmara
+# TVE RS   <- http-only, cannot play on an https site
+TV Cultura
+
+## Bulgaria  (11)
+BNT1
+# bTV   <- http-only, cannot play on an https site
+# Nova TV   <- http-only, cannot play on an https site
+# Bulgaria On Air   <- http-only, cannot play on an https site
+BNT2
+BNT3
+# Nova News   <- http-only, cannot play on an https site
+City TV Ⓢ
+BNT4
+# Euronews Bulgaria Ⓨ   <- links to a web page, not a stream
+TV1
+
+## Georgia  (11)
+First Channel (1TV)
+First Channel /Education/ (2TV)
+Imedi TV
+# Rustavi 2   <- http-only, cannot play on an https site
+Mtavari Arkhi
+# GDS   <- http-only, cannot play on an https site
+# TV Pirveli   <- http-only, cannot play on an https site
+Formula
+Pos TV
+Obieqtivi
+# Euronews Georgia Ⓖ   <- http-only, cannot play on an https site
+
+## Belgium  (10)
+RTL-Be
+# La Une   <- http-only, cannot play on an https site
+# Tipik   <- http-only, cannot play on an https site
+Arte Belgique Ⓖ
+# La Trois   <- http-only, cannot play on an https site
+TV5 Monde
+LN24
+BX1
+EEN
+Bruzz
+
+## Lithuania  (10)
+# LRT TV   <- http-only, cannot play on an https site
+LRT Lituanica
+Lietuvos Rytas TV
+Delfi TV
+# LRT Plius   <- http-only, cannot play on an https site
+# TV3 Ⓢ   <- http-only, cannot play on an https site
+# TV6 Ⓢ   <- http-only, cannot play on an https site
+# TV8 Ⓢ   <- http-only, cannot play on an https site
+# LNK   <- http-only, cannot play on an https site
+# BTV   <- http-only, cannot play on an https site
+
+## Poland  (10)
+TVP1
+TVP2
+TVP Polonia
+TVP Info
+Belsat
+TVP World
+TVP Kultura 2
+4fun Kids
+4fun.tv Ⓢ
+TV Republika
+
+## ISLAMIC CHANNELS  (9)
 Unnamed
 QURAN RADIOTV SMC
 Madani Tv
 AL EKHBARIA
 ALMASIRA MUBASHER
-AL EKHBARIA
 AL QAMAR
 AL ISTIQAMA
 BAHRAIN QURAN
 Peace Tv English
 
-## Cricket   (7)
-A Sports HD
-Iran News
-Pk Sports  HD
-Motor Vision
-Live Quran TV
-Saudia Arabia
-FM Radio
+## Serbia  (9)
+RTS 1
+RTS 2
+# RTS 3   <- http-only, cannot play on an https site
+Red TV
+Kurir TV
+Informer TV
+RTS Svet
+# RTV 1   <- not a stream URL
+# RTV 2   <- not a stream URL
+
+## Venezuela  (9)
+# Venevisión   <- http-only, cannot play on an https site
+# Televen   <- http-only, cannot play on an https site
+# Globovisión   <- http-only, cannot play on an https site
+Vale TV Ⓢ
+Telesur
+Latina TV
+inter TV
+Aguacate TV
+AS3 Sport TV
+
+## News (AR)  (9)
+Al Jazeera العربية
+Al Arabiya العربية
+Al Hadath العربية
+# France 24 العربية Ⓨ   <- links to a web page, not a stream
+DW العربية
+CGTN العربية
+Sky News العربية
+RT العربية
+Sahara 24 صحراء
+
+## Estonia  (8)
+# ETV Ⓖ   <- http-only, cannot play on an https site
+# ETV2 Ⓖ   <- http-only, cannot play on an https site
+# ETV+ Ⓖ   <- http-only, cannot play on an https site
+Riigikogu
+Taevas TV7
+Life TV Estonia
+Life TV Europe
+# TBN Baltia   <- http-only, cannot play on an https site
+
+## Israel  (8)
+# 9 канал Ⓨ   <- links to a web page, not a stream
+כאן 11
+ערוץ 13
+ערוץ 14
+The Shopping Channel
+مكان 33
+# כאן חינוכית   <- http-only, cannot play on an https site
+# Knesset   <- http-only, cannot play on an https site
+
+## Turkmenistan  (8)
+Altyn Asyr
+Yaslyk
+Miras
+Türkmen Sporty
+Türkmen Owazy
+Ashgabat
+Türkmenistan
+ARKADAG
+
+## Business  (8)
+Cheddar News
+Bloomberg TV+
+Bloomberg Television (US)
+Bloomberg Television (Europe)
+Yahoo! Finance
+CNBC Europe
+Ausbiz
+Moconomy
+
+## Costa Rica  (7)
+Canal 1
+Canal 2 CDR
+Canal 4
+Canal 6
+# Canal 8   <- http-only, cannot play on an https site
+Canal 11
+# 88 Stereo   <- http-only, cannot play on an https site
 
 ## Live Event  (6)
 Day 3 - 2nd Test - 25 Aug 2026 [ENG] - India Tour of Sri Lanka 2026
@@ -198,13 +2239,61 @@ Day 3 - 2nd Test - 25 Aug 2026 [TEL] - India Tour of Sri Lanka 2026
 Day 3 - 2nd Test - 25 Aug 2026 [KAN] - India Tour of Sri Lanka 2026
 Mumbai Kings vs Gujarat Gladiators - 25 Aug 2026 [ENG] - JITO Premier League 2026
 
-## SPORTS  (6)
-Star Sports-1 Hindi
-Willow HD
-# Live Sports-3   <- http-only, cannot play on an https site
-# Star Sports-2   <- http-only, cannot play on an https site
-Cowboy tv
-T-Sports [2]
+## Cricket   (6)
+Iran News
+Pk Sports  HD
+Motor Vision
+Live Quran TV
+Saudia Arabia
+FM Radio
+
+## Moldova  (6)
+Moldova 1
+Moldova 2
+TVR Moldova Ⓖ
+# Sor TV   <- http-only, cannot play on an https site
+Vocea Basarabiei
+# Balti TV   <- http-only, cannot play on an https site
+
+## Norway  (6)
+NRK1 Ⓖ
+NRK2 Ⓖ
+NRK3 Ⓖ
+NRK Super Ⓖ
+Frikanalen
+# Kanal 10 Norge Ⓨ   <- links to a web page, not a stream
+
+## Peru  (6)
+# Panamericana TV   <- http-only, cannot play on an https site
+# ATV+ Noticias   <- http-only, cannot play on an https site
+# ATV+ Noticias Ⓨ   <- links to a web page, not a stream
+# Exitosa (ex-Karibeña)   <- http-only, cannot play on an https site
+Latina
+Cosmos TV
+
+## Switzerland  (6)
+# SRF 1   <- http-only, cannot play on an https site
+# RTS Un   <- http-only, cannot play on an https site
+# TVM 3   <- http-only, cannot play on an https site
+# RSI La 1   <- http-only, cannot play on an https site
+# RSI La 2   <- http-only, cannot play on an https site
+Teleticino
+
+## Trinidad  (6)
+CNC3
+gayelle
+Synergy TV
+TTT
+IBN
+Trinity TV
+
+## News (ES)  (6)
+# Euronews Español Ⓨ   <- links to a web page, not a stream
+# France 24 Español Ⓨ   <- links to a web page, not a stream
+DW Español Ⓢ
+CGTN Español
+RT Español Ⓖ
+RTVE 24H
 
 ## CARTOON Drama  (5)
 Gopal Bhar TV
@@ -220,6 +2309,55 @@ MK Six
 Colors
 Bflix Movies
 
+## SPORTS  (5)
+Star Sports-1 Hindi
+# Live Sports-3   <- http-only, cannot play on an https site
+# Star Sports-2   <- http-only, cannot play on an https site
+Cowboy tv
+T-Sports [2]
+
+## Cyprus  (5)
+# RIK 1 Ⓢ   <- http-only, cannot play on an https site
+# RIK 2 Ⓢ   <- http-only, cannot play on an https site
+# RIK HD   <- http-only, cannot play on an https site
+RIK Sat
+Ada TV
+
+## Hong Kong  (5)
+RTHK TV 31
+RTHK TV 32
+HOY TV Ⓖ
+TVB News Channel
+TVB Finance (Sports & Information Channel)
+
+## Kenya  (5)
+KTN NEWS TV
+Citizen TV
+NTV Kenya
+KTN Home
+K24 TV
+
+## Latvia  (5)
+ReTV
+TV Jūrmala
+Vidusdaugavas Televīzija
+LTV1
+LTV7 Ⓖ
+
+## Macau  (5)
+# TDM Ou Mun   <- http-only, cannot play on an https site
+Canal Macau
+TDM Sport
+TDM Information
+TDM Entertainment
+
+## Weather  (5)
+AccuWeather NOW
+Fox Weather
+KTCA-DT5
+The Weather Network
+Sky News Weather Ⓖ
+
 ## Bangla  (4)
 # MUSIC BANGLA   <- http-only, cannot play on an https site
 MY TV
@@ -231,6 +2369,12 @@ BBC Cbeebies
 PBS Kids
 Cartoon Network
 # Nursary Rhymes   <- http-only, cannot play on an https site
+
+## Montenegro  (4)
+TVCG 1 Ⓖ
+TVCG 2 Ⓖ
+TVCG 3 Ⓖ
+TVCG MNE
 
 ## Akash Go  (3)
 # Ekushey TV   <- http-only, cannot play on an https site
@@ -247,11 +2391,6 @@ Maasranga Tv
 Mundial Sports HD
 A SPOR
 
-## Entertainment  (3)
-Colors Infinity SD
-FASHION ONE
-FASHION ONE
-
 ## NEWS INTERNASIONAL TV  (3)
 France News 24
 Times Of India
@@ -267,9 +2406,53 @@ Action Hollywood Movies
 # Greenland 2: Migration (2026) (Hindi)   <- http-only, cannot play on an https site
 # Freelancer   <- http-only, cannot play on an https site
 
+## Armenia  (3)
+Armenia 1
+# Kentron TV Ⓢ   <- http-only, cannot play on an https site
+# Armenia TV Ⓢ   <- http-only, cannot play on an https site
+
+## Iceland  (3)
+RÚV
+RÚV 2
+Alþingi
+
+## Indonesia  (3)
+CNBC Indonesia
+# CNN Indonesia   <- http-only, cannot play on an https site
+BeritaSatu
+
+## Kazakhstan  (3)
+Balapan TV
+Qazaqstan
+# QazSport   <- http-only, cannot play on an https site
+
+## Luxembourg  (3)
+RTL Télé Lëtzebuerg
+RTL Zwee
+Chamber TV
+
+## Malta  (3)
+One
+# Smash TV   <- http-only, cannot play on an https site
+# TVM Ⓢ Ⓨ   <- links to a web page, not a stream
+
+## Documentaries (EN)  (3)
+CGTN Documentary English Ⓢ
+RT Documentary English Ⓖ
+Peer TV South Tyrol
+
+## Music (EN)  (3)
+Now 70's
+Now 80's
+NOW Rock
+
 ## Infotainment Channels  (2)
 Travel XP English
 Amazon SAT
+
+## Entertainment  (2)
+Colors Infinity SD
+FASHION ONE
 
 ## Documentary  (2)
 Insight
@@ -295,10 +2478,31 @@ Music Mastii
 Hindi Movies
 South Movies
 
-## Welcome to PlayZ TV | New App  (1)
-Welcome to PlayZ TV
+## Chad  (2)
+# Tchad 24   <- http-only, cannot play on an https site
+Télé Tchad Ⓢ
 
-## Promo  (1)
+## Faroe Islands  (2)
+KVF Sjónvarp
+Tingvarp
+
+## Greenland  (2)
+# KNR1 Ⓨ Ⓖ   <- links to a web page, not a stream
+# KNR2 Ⓨ   <- links to a web page, not a stream
+
+## Monaco  (2)
+TV Monaco
+MonacoInfo
+
+## Paraguay  (2)
+# Unicanal Ⓨ   <- links to a web page, not a stream
+# ABC TV Ⓨ   <- links to a web page, not a stream
+
+## San Marino  (2)
+San Marino Rtv
+San Marino Rtv Sport
+
+## Welcome to PlayZ TV | New App  (1)
 Welcome to PlayZ TV
 
 ## FM REDIO  (1)
@@ -330,3 +2534,21 @@ Surongo
 
 ## Indian-Bangla  (1)
 R Plus Gould
+
+## Andorra  (1)
+Andorra TV
+
+## Dominican Republic  (1)
+Canal RTVD 4
+
+## Kosovo  (1)
+RTK 3
+
+## North Korea  (1)
+KCTV
+
+## Slovenia  (1)
+Folx Slovenija
+
+## Documentaries (AR)  (1)
+Al Jazeera Documentary Ⓖ
