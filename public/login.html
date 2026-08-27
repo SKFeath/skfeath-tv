@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="login-wrap">
+    <form class="login-card" id="form">
+      <h1>Living Room TV</h1>
+      <p>Enter the access code you were given.</p>
+      <input id="code" type="password" placeholder="Access code" autocomplete="off" autofocus>
+      <button id="go" type="submit">Sign in</button>
+      <div class="err" id="err"></div>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById('form');
+    const err = document.getElementById('err');
+    const go = document.getElementById('go');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.textContent = '';
+      go.disabled = true;
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: document.getElementById('code').value }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'Sign in failed');
+        location.href = '/';
+      } catch (e) {
+        err.textContent = e.message;
+        go.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

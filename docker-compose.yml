@@ -1,0 +1,12 @@
+services:
+  iptv:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      # Behind a TLS-terminating proxy (Caddy, Cloudflare, a platform router),
+      # cookies must be marked secure.
+      COOKIE_SECURE: "1"

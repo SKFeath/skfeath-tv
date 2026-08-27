@@ -1,0 +1,8 @@
+# Cloudflare Pages project config.
+#
+# "name" becomes your public URL: https://<name>.pages.dev
+# Change it before the first deploy if you want a different address - renaming
+# later means a new URL.
+name = "skfeath-tv"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-08-28"

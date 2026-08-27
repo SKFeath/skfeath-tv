@@ -1,0 +1,29 @@
+{
+  "name": "iptv-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted web player for an Xtream Codes / M3U IPTV subscription",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node scripts/check-source.js",
+    "mock": "node scripts/mock-provider.js",
+    "test:e2e": "node scripts/run-e2e.js",
+    "channels": "node tools/make-list.js",
+    "build": "node tools/build-static.js",
+    "preview": "node tools/preview.js",
+    "health": "node tools/health-check.js",
+    "prune": "node tools/prune.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "hls.js": "^1.5.17",
+    "mpegts.js": "^1.7.3"
+  }
+}

@@ -1,0 +1,332 @@
+# ---------------------------------------------------------------
+#  Which channels appear on your site
+# ---------------------------------------------------------------
+#  One channel per line. Comment a line out with # to hide it,
+#  or delete the line entirely. Then run:  npm run build
+#
+#  Channels marked "http-only" are commented out already: browsers
+#  refuse to load plain http:// video on an https:// page, so they
+#  cannot work on a hosted site.
+#
+#  Regenerate this file any time with:  npm run channels
+#  Your choices are preserved when you do.
+# ---------------------------------------------------------------
+
+## [LIVE] BDIX ♛  (69)
+[BD] Welcome to PlayZ TV {Sponsored}
+[BD] EPL channel 1
+[BD] WC Match Recap
+[BD] Sony Ten Sports 1 HD
+[BD] Sony Ten Sports 2 HD
+[BD] Sony Ten Sports 5 HD
+[BD] Sony Ten Cricket
+[BD] Eurosport HD
+[BD] NTV
+[BD] Channel i
+[BD] Somoy TV
+[BD] Toffee TV
+[BD] Ekhon TV
+[BD] Global TV
+[BD] Jamuna TV
+[BD] Rajdhani TV
+[BD] Bangla TV
+[BD] Independent TV
+[BD] Channel S
+[BD] Ekattor TV
+[BD] Ananda TV
+[BD] Bijoy TV
+[BD] Islamic TV
+[BD] Asian TV
+[BD] Desh TV
+[BD] Nexus TV
+[BD] Mohona TV
+[BD] Movie Bangla
+[BD] CNN
+[BD] Sony MAX HD
+[BD] Sony MAX
+[BD] Sony PIX HD
+[BD] Zee Cafe
+[BD] B4U Movies APAC
+[BD] Sony MAX 2
+[BD] Zee Bangla Cinema
+[BD] Zee Cinema HD
+[BD] & Pictures HD
+[BD] Toffee Movies
+[BD] Zee Bollywood
+[BD] Zee Action
+[BD] Zee Bangla
+[BD] HUM
+[BD] HUM Masala
+[BD] HUM Sitaray
+[BD] Sony Aath
+[BD] Zee Anmol
+[BD] B4U Music
+[BD] Zing
+[BD] Sony Entertainment Television HD
+[BD] Sony SAB HD
+[BD] Zee TV HD
+[BD] &TV HD
+[BD] Sony Entertainment Television
+[BD] TLC HD
+[BD] TLC
+[BD] Animal Planet
+[BD] Animal Planet HD
+[BD] Sony BBC Earth HD
+[BD] Discovery
+[BD] Discovery HD
+[BD] Discovery Science
+[BD] Discovery Turbo
+[BD] Investigation Discovery HD
+[BD] Cartoon Network
+[BD] Cartoon Network HD +
+[BD] Discovery Kids
+[BD] POGO
+[BD] Sony YAY
+
+## Sports  (46)
+T Sports Live 01
+T Sports Live 01 (1)
+T Sports (1080p) (1) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2)
+Star Sports 1
+Star Sports 1 Hindi
+PTV Sports
+Willow HD
+Willow HD 2
+Ten Sports
+A Sports HD
+Sky Sports Cricket
+Sky Sports Main Event
+TNT 1
+TNT 2
+TNT 3
+TNT 4
+Sky Sport Nz 1
+Sky Sport Nz 2
+Sky Sport Nz 3
+Sky Sport Nz 4
+Sky Sport Nz 5
+Sky Sport 6 Nz
+Sky Sport Nz 7
+Sky Sport Nz 8
+Sky Sport Nz 9
+Sky Cinema
+Sky Sports Action
+Sky Sports Golf
+Sky Sports Premier League
+Sky Sports Football
+Sky Sports Plus
+Sky Sports F1
+LaLiGA
+Premier Sports 1
+Premier Sports 2
+Super Football
+Super Premier League
+Astro Cricket
+ESPN 1
+ESPN 2
+Sky Sports Arena
+Sky Sports Mix
+Sky Sports Tennis
+Fox Cricket 501 HD
+Sony Sports3
+# Star Sports 1 HD   <- http-only, cannot play on an https site
+
+## Unknown  (19)
+Deshi TV (720p)
+Ananda TV
+ATN Music (360p)
+Gazi TV
+Channel S
+My TV
+Green TV (1080p)
+RTV (720p)
+Boishakhi TV
+# RTV (720p)   <- http-only, cannot play on an https site
+# Maasranga TV (720p)   <- http-only, cannot play on an https site
+Rajdhani TV (1080p)
+Maasranga TV (720p)
+RTV (720p)
+Duronto TV (720p)
+T Sports (1080p)
+NTV (720p)
+Nexus TV (576p)
+YRF Music HD
+
+## NEWS INTERNASIONAL  (14)
+DW NEWS
+Global News (US)
+T Global News (Canada)
+DW English
+DW English _
+News Max 2
+France 24 English (720p)
+CNN (US)
+NDTV English
+NDTV Hindi
+RTNEWS GLOBAL
+NDTV NEWS
+RT News (EN)
+RT NEWS USA
+
+## ISLAMIC CHANNELS  (11)
+Unnamed
+Unnamed
+QURAN RADIOTV SMC
+Madani Tv
+AL EKHBARIA
+ALMASIRA MUBASHER
+AL EKHBARIA
+AL QAMAR
+AL ISTIQAMA
+BAHRAIN QURAN
+Peace Tv English
+
+## Cricket   (7)
+A Sports HD
+Iran News
+Pk Sports  HD
+Motor Vision
+Live Quran TV
+Saudia Arabia
+FM Radio
+
+## Live Event  (6)
+Day 3 - 2nd Test - 25 Aug 2026 [ENG] - India Tour of Sri Lanka 2026
+Day 3 - 2nd Test - 25 Aug 2026 [HIN] - India Tour of Sri Lanka 2026
+Day 3 - 2nd Test - 25 Aug 2026 [TAM] - India Tour of Sri Lanka 2026
+Day 3 - 2nd Test - 25 Aug 2026 [TEL] - India Tour of Sri Lanka 2026
+Day 3 - 2nd Test - 25 Aug 2026 [KAN] - India Tour of Sri Lanka 2026
+Mumbai Kings vs Gujarat Gladiators - 25 Aug 2026 [ENG] - JITO Premier League 2026
+
+## SPORTS  (6)
+Star Sports-1 Hindi
+Willow HD
+# Live Sports-3   <- http-only, cannot play on an https site
+# Star Sports-2   <- http-only, cannot play on an https site
+Cowboy tv
+T-Sports [2]
+
+## CARTOON Drama  (5)
+Gopal Bhar TV
+Tom & Jerry TV
+Motu Patlu
+Doraemon TV
+Mr Bean Animated
+
+## Hindi  (5)
+# MBC tv   <- http-only, cannot play on an https site
+B4U Movies
+MK Six
+Colors
+Bflix Movies
+
+## Bangla  (4)
+# MUSIC BANGLA   <- http-only, cannot play on an https site
+MY TV
+# MAASRANGA HD   <- http-only, cannot play on an https site
+BTV News
+
+## Kids  (4)
+BBC Cbeebies
+PBS Kids
+Cartoon Network
+# Nursary Rhymes   <- http-only, cannot play on an https site
+
+## Akash Go  (3)
+# Ekushey TV   <- http-only, cannot play on an https site
+Deepto TV
+BBC News
+
+## BANGLA  (3)
+Deshe Bideshe
+RTV
+Maasranga Tv
+
+## Football  (3)
+# QAZ Sports HD   <- http-only, cannot play on an https site
+Mundial Sports HD
+A SPOR
+
+## Entertainment  (3)
+Colors Infinity SD
+FASHION ONE
+FASHION ONE
+
+## NEWS INTERNASIONAL TV  (3)
+France News 24
+Times Of India
+TRT WORLD
+
+## Relagion Channel  (3)
+EWTN TV
+Arihant TV
+Peace TV Urdu
+
+## English Movies  (3)
+Action Hollywood Movies
+# Greenland 2: Migration (2026) (Hindi)   <- http-only, cannot play on an https site
+# Freelancer   <- http-only, cannot play on an https site
+
+## Infotainment Channels  (2)
+Travel XP English
+Amazon SAT
+
+## Documentary  (2)
+Insight
+REAL WILD
+
+## Kolkata Bangla  (2)
+R Plus Gold
+AAKASH AATH
+
+## Information  (2)
+Travel XP English NZ
+# Nat Geo HD   <- http-only, cannot play on an https site
+
+## Hindi Movies  (2)
+Sheemaroo Bollywood
+Goldmines Movies 2
+
+## MUSIC  (2)
+Baallee
+Music Mastii
+
+## Hindi | 24/7  (2)
+Hindi Movies
+South Movies
+
+## Welcome to PlayZ TV | New App  (1)
+Welcome to PlayZ TV
+
+## Promo  (1)
+Welcome to PlayZ TV
+
+## FM REDIO  (1)
+Quran
+
+## Radio FM   (1)
+# Al Quran Radio   <- http-only, cannot play on an https site
+
+## Live Sports  (1)
+Live Sports
+
+## Indian Bangla News  (1)
+NK
+
+## Bangladeshi   (1)
+pcv
+
+## KIDS  (1)
+Tom & Jarry
+
+## Hindi Music  (1)
+# Hindi Hits HD   <- http-only, cannot play on an https site
+
+## Bangla Movies  (1)
+Surongo
+
+## Hindi Dabbing Movies  (1)
+# Jana Nayagan (2026) (Hindi)   <- http-only, cannot play on an https site
+
+## Indian-Bangla  (1)
+R Plus Gould

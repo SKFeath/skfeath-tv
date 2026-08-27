@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Living Room TV</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">Living Room TV</div>
+      <div class="pill" id="account">…</div>
+      <div class="spacer"></div>
+      <div class="pill" id="watchers">-</div>
+      <div class="pill shared">Shared room - everyone sees the same channel</div>
+      <button class="link-btn" id="logout">Sign out</button>
+    </header>
+
+    <nav class="sidebar" id="cats"></nav>
+
+    <div class="main">
+      <section class="stage">
+        <div class="video-box">
+          <video id="video" controls playsinline autoplay></video>
+          <div class="overlay" id="overlay">
+            <div>
+              <strong>Pick a channel</strong>
+              Choose something from the list to start watching.
+            </div>
+          </div>
+        </div>
+        <div class="now">
+          <h2 id="now-title">Nothing playing</h2>
+          <div class="meta" id="now-meta"></div>
+          <div class="room-note hidden" id="room-note"></div>
+        </div>
+      </section>
+
+      <aside class="channels">
+        <div class="search-row">
+          <input id="search" type="search" placeholder="Search channels…" autocomplete="off">
+        </div>
+        <div class="list" id="list">
+          <div class="list-note">Loading channels…</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="/vendor/hls/hls.min.js"></script>
+  <script src="/vendor/mpegts/mpegts.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
