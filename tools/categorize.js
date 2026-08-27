@@ -84,7 +84,14 @@ const KNOWN_MULTI_SPORT_FOOTBALL = [
     // broadcast rights to LaLiga a few seasons back and marketed heavily
     // around it - reasonably confident this is right, though I cannot verify
     // whether the deal is still active for the current season.
-    match: ['t sports', 'tsports', 't-sports'],
+    //
+    // A plain substring match on 't sports' previously caught "ERT Sports"
+    // (Greece's state broadcaster) mid-word - "erT SPORTS" contains that
+    // literal substring. A bare \b boundary isn't enough either: JS's \w is
+    // ASCII-only, so \b treats accented letters as non-word characters and
+    // "ČT Sport" (Czech Television) slipped through the same way - the
+    // lookbehind below requires any Unicode letter/digit, not just [A-Za-z].
+    re: /(?<![\p{L}\p{N}])t[\s-]sports?\b/iu,
     category: 'Football',
     subcategory: 'LaLiga',
     also: { category: 'Sports', subcategory: 'Cricket' },
@@ -197,13 +204,20 @@ function classifySportByName(name) {
   }
 
   for (const entry of KNOWN_MULTI_SPORT_FOOTBALL) {
-    if (anyOf(name, entry.match)) {
-      return { category: entry.category, subcategory: entry.subcategory, also: entry.also };
-    }
+    const hit = entry.re ? entry.re.test(name) : anyOf(name, entry.match);
+    if (hit) return { category: entry.category, subcategory: entry.subcategory, also: entry.also };
   }
 
-  for (const [league, words] of FOOTBALL_LEAGUES) {
-    if (anyOf(name, words)) return { category: 'Football', subcategory: league };
+  // "Strongman Champions League" is a strength-athletics competition, not
+  // football - the literal phrase 'champions league' inside its name would
+  // otherwise mis-file it. Extend this list if other non-football uses of
+  // a league name turn up.
+  const isKnownNonFootball = anyOf(name, ['strongman champions league']);
+
+  if (!isKnownNonFootball) {
+    for (const [league, words] of FOOTBALL_LEAGUES) {
+      if (anyOf(name, words)) return { category: 'Football', subcategory: league };
+    }
   }
   if (MLS_RE.test(name)) return { category: 'Football', subcategory: 'MLS' };
   if (anyOf(name, MULTI_LEAGUE_FOOTBALL) || TNT_NUMBERED.test(name)) {
