@@ -71,10 +71,39 @@ const MULTI_LEAGUE_FOOTBALL = [
 ];
 const TNT_NUMBERED = /\btnt\s*\d\b/; // "TNT 1".."TNT 4" as they appear in this playlist
 
+// Regional multi-sport broadcasters known (with varying confidence) to carry
+// one of the target leagues alongside their more usual cricket coverage.
+// Rights rotate by season and this is drawn from general knowledge, not a
+// live feed - stated per-entry with the confidence actually warranted.
+// A channel matched here is filed under Football but ALSO kept visible under
+// Sports > Cricket via `also`, since these are genuinely dual-purpose, not
+// exclusively one or the other.
+const KNOWN_MULTI_SPORT_FOOTBALL = [
+  {
+    // T Sports (Bangladesh): to the best of my knowledge, acquired Bangladesh
+    // broadcast rights to LaLiga a few seasons back and marketed heavily
+    // around it - reasonably confident this is right, though I cannot verify
+    // whether the deal is still active for the current season.
+    match: ['t sports', 'tsports', 't-sports'],
+    category: 'Football',
+    subcategory: 'LaLiga',
+    also: { category: 'Sports', subcategory: 'Cricket' },
+  },
+  {
+    // Star Sports (India): has held LaLiga India rights at points in the
+    // past; lower confidence than T Sports since I recall this package
+    // moving between broadcasters over the years, and "Multi-League" is
+    // deliberately non-committal about which competition it currently airs.
+    match: ['star sports'],
+    category: 'Football',
+    subcategory: 'Multi-League',
+    also: { category: 'Sports', subcategory: 'Cricket' },
+  },
+];
+
 const CRICKET = [
-  'cricket', 'willow', 'star sports', 'ten sports', 'ptv sports', 't sports',
-  't-sports', 'tsports', 'a sports', 'astro cricket', 'fox cricket', 'sony ten',
-  'super sport cricket', 'ary zap',
+  'cricket', 'willow', 'ten sports', 'ptv sports', 'a sports', 'astro cricket',
+  'fox cricket', 'sony ten', 'super sport cricket', 'ary zap',
 ];
 
 const MOTORSPORT = ['motorsport', 'formula 1', ' f1', 'f1 ', 'motogp', 'nascar', 'rally', 'motor vision', 'redbull tv'];
@@ -132,8 +161,58 @@ const BD_GROUPS = [
 // Groups that are explicitly video-on-demand rather than live TV.
 const VOD_GROUPS = ['vod italy', 'vod movies'];
 
+const WEAK_SPORT_GROUPS = ['sports', 'football', 'cricket', 'live sports', 'live event'];
+
 /**
- * @returns {{category: string, subcategory: string}}
+ * Sport classification driven ENTIRELY by the channel's own name - no trust
+ * in the upstream group-title. Returns null when the name gives no sport
+ * signal at all.
+ *
+ * This separation matters: several channels in this playlist carry an
+ * upstream group-title of "Cricket" that is simply wrong (Iran News, Live
+ * Quran TV, FM Radio, Motor Vision land there purely by mislabeled group,
+ * despite their names having nothing to do with cricket). Trusting the group
+ * label as readily as the name previously misfiled all of them as Cricket.
+ */
+function classifySportByName(name) {
+  const isFixture =
+    /\bvs\b/.test(name) || /\b\d{1,2}\s+\w{3}\s+20\d\d\b/.test(name) ||
+    /\b\d(?:st|nd|rd|th)\s+test\b/.test(name) || /\bodi\b|\bt20\b/.test(name);
+  if (isFixture) {
+    const isFootballFixture = anyOf(name, FOOTBALL_GENERIC) || anyOf(name, MULTI_LEAGUE_FOOTBALL);
+    // One-off fixtures ("Team A vs Team B - 25 Aug 2026 - Some Trophy") are
+    // events, not channels: they expire within days and their tournament name
+    // otherwise lands them in the wrong league (a cricket "JITO Premier
+    // League" is not the EPL). Keep them together and out of the league tabs.
+    return { category: isFootballFixture ? 'Football' : 'Sports', subcategory: 'Live Events' };
+  }
+
+  for (const entry of KNOWN_MULTI_SPORT_FOOTBALL) {
+    if (anyOf(name, entry.match)) {
+      return { category: entry.category, subcategory: entry.subcategory, also: entry.also };
+    }
+  }
+
+  for (const [league, words] of FOOTBALL_LEAGUES) {
+    if (anyOf(name, words)) return { category: 'Football', subcategory: league };
+  }
+  if (MLS_RE.test(name)) return { category: 'Football', subcategory: 'MLS' };
+  if (anyOf(name, MULTI_LEAGUE_FOOTBALL) || TNT_NUMBERED.test(name)) {
+    return { category: 'Football', subcategory: 'Multi-League' };
+  }
+  if (anyOf(name, FOOTBALL_GENERIC)) return { category: 'Football', subcategory: 'General' };
+
+  if (anyOf(name, CRICKET)) return { category: 'Sports', subcategory: 'Cricket' };
+  if (anyOf(name, MOTORSPORT)) return { category: 'Sports', subcategory: 'Motorsport' };
+  if (anyOf(name, COMBAT)) return { category: 'Sports', subcategory: 'Combat Sports' };
+  if (anyOf(name, US_SPORTS)) return { category: 'Sports', subcategory: 'US Sports' };
+  if (anyOf(name, SPORT_GENERIC)) return { category: 'Sports', subcategory: 'All Sports' };
+
+  return null;
+}
+
+/**
+ * @returns {{category: string, subcategory: string, also?: {category: string, subcategory: string}}}
  */
 function classify(channel) {
   const name = norm(channel.name);
@@ -145,52 +224,9 @@ function classify(channel) {
     return { category: 'On Demand', subcategory: group.includes('italy') ? 'Italy' : 'Movies' };
   }
 
-  // --- sports (checked early: sports channels hide inside country groups) ---
-  const looksSport =
-    anyOf(name, SPORT_GENERIC) || anyOf(name, FOOTBALL_GENERIC) ||
-    anyOf(name, MULTI_LEAGUE_FOOTBALL) || TNT_NUMBERED.test(name) || MLS_RE.test(name) ||
-    anyOf(name, CRICKET) || anyOf(name, MOTORSPORT) || anyOf(name, COMBAT) ||
-    anyOf(name, US_SPORTS) || group === 'sports' || group === 'football' ||
-    group === 'cricket ' || group === 'cricket' || group === 'live sports' ||
-    group === 'live event';
-
-  if (looksSport) {
-    // One-off fixtures ("Team A vs Team B - 25 Aug 2026 - Some Trophy") are
-    // events, not channels: they expire within days and their tournament name
-    // otherwise lands them in the wrong league (a cricket "JITO Premier
-    // League" is not the EPL). Keep them together and out of the league tabs.
-    const isFixture =
-      /\bvs\b/.test(name) || /\b\d{1,2}\s+\w{3}\s+20\d\d\b/.test(name) ||
-      /\b\d(?:st|nd|rd|th)\s+test\b/.test(name) || /\bodi\b|\bt20\b/.test(name);
-    if (isFixture) {
-      const isFootballFixture = anyOf(name, FOOTBALL_GENERIC) || anyOf(name, MULTI_LEAGUE_FOOTBALL);
-      return {
-        category: isFootballFixture ? 'Football' : 'Sports',
-        subcategory: 'Live Events',
-      };
-    }
-
-    // Football, checked before the generic sports buckets below.
-    for (const [league, words] of FOOTBALL_LEAGUES) {
-      if (anyOf(name, words)) return { category: 'Football', subcategory: league };
-    }
-    if (MLS_RE.test(name)) return { category: 'Football', subcategory: 'MLS' };
-    if (anyOf(name, MULTI_LEAGUE_FOOTBALL) || TNT_NUMBERED.test(name)) {
-      return { category: 'Football', subcategory: 'Multi-League' };
-    }
-    if (anyOf(name, FOOTBALL_GENERIC) || group === 'football') {
-      return { category: 'Football', subcategory: 'General' };
-    }
-
-    // Non-football sports.
-    if (anyOf(name, CRICKET) || group.trim() === 'cricket') {
-      return { category: 'Sports', subcategory: 'Cricket' };
-    }
-    if (anyOf(name, MOTORSPORT)) return { category: 'Sports', subcategory: 'Motorsport' };
-    if (anyOf(name, COMBAT)) return { category: 'Sports', subcategory: 'Combat Sports' };
-    if (anyOf(name, US_SPORTS)) return { category: 'Sports', subcategory: 'US Sports' };
-    return { category: 'Sports', subcategory: 'All Sports' };
-  }
+  // --- sport, by name only (strong signal - checked ahead of everything) ---
+  const byName = classifySportByName(name);
+  if (byName) return byName;
 
   // --- kids ----------------------------------------------------------------
   if (anyOf(name, KIDS) || group.includes('kids') || group.includes('cartoon')) {
@@ -269,6 +305,19 @@ function classify(channel) {
     return { category: 'Entertainment', subcategory: 'General' };
   }
 
+  // --- sport, by upstream group only (weak signal - last resort) -----------
+  // Only reached once every name-based category above, including
+  // classifySportByName, has found nothing. Deliberately last: several
+  // channels in this playlist carry a "Cricket" or "Sports" group-title that
+  // is simply wrong for their actual content (see classifySportByName's
+  // comment), so a group-only match must never outrank a real name match.
+  if (WEAK_SPORT_GROUPS.includes(group.trim())) {
+    return {
+      category: group.trim() === 'football' ? 'Football' : 'Sports',
+      subcategory: group.trim() === 'football' ? 'General' : 'All Sports',
+    };
+  }
+
   // --- fallback: keep the original grouping as a country/region ------------
   const country = String(channel.group || 'Other').trim();
   return { category: 'Countries', subcategory: country || 'Other' };
@@ -280,10 +329,16 @@ function classify(channel) {
  */
 function buildTree(channels) {
   const cats = new Map();
+  const bump = (category, subcategory) => {
+    if (!cats.has(category)) cats.set(category, new Map());
+    const subs = cats.get(category);
+    subs.set(subcategory, (subs.get(subcategory) || 0) + 1);
+  };
   for (const c of channels) {
-    if (!cats.has(c.category)) cats.set(c.category, new Map());
-    const subs = cats.get(c.category);
-    subs.set(c.subcategory, (subs.get(c.subcategory) || 0) + 1);
+    bump(c.category, c.subcategory);
+    // Dual-purpose channels (see classifySportByName's KNOWN_MULTI_SPORT_FOOTBALL)
+    // count in both places they actually appear.
+    if (c.also) bump(c.also.category, c.also.subcategory);
   }
 
   const out = [...cats.entries()]

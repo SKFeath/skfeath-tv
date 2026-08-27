@@ -259,3 +259,8 @@ button, input { font: inherit; }
   .topmeta .pill { display: none; }
   .stats { display: none; }
 }
+.also-tag {
+  flex: none; font-size: 10px; letter-spacing: .02em; color: var(--muted-2);
+  background: var(--panel); border: 1px solid var(--line); padding: 2px 7px;
+  border-radius: 999px; white-space: nowrap;
+}

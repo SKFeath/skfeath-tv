@@ -300,12 +300,21 @@ function toggleFav(c) {
 // ---------------------------------------------------------------------------
 // categories
 // ---------------------------------------------------------------------------
+function matchesCategory(c, category, subcategory) {
+  if (c.category === category && (!subcategory || c.subcategory === subcategory)) return true;
+  // Dual-purpose channels (e.g. a regional network known to carry both
+  // cricket and a target football league) are cross-listed via `also` and
+  // show up under both places they actually belong.
+  if (c.also && c.also.category === category && (!subcategory || c.also.subcategory === subcategory)) {
+    return true;
+  }
+  return false;
+}
+
 function categoryChannels(category, subcategory) {
   if (category === 'Favourites') return state.channels.filter(isFav);
   if (category === 'All') return state.channels;
-  return state.channels.filter(
-    (c) => c.category === category && (!subcategory || c.subcategory === subcategory)
-  );
+  return state.channels.filter((c) => matchesCategory(c, category, subcategory));
 }
 
 function visibleCount(list) {
@@ -457,6 +466,19 @@ function channelRow(c) {
     off.className = 'off-tag';
     off.textContent = 'off';
     b.appendChild(off);
+  }
+
+  // A dual-purpose channel shows which OTHER category it's also listed
+  // under, so it's clear why e.g. T Sports appears in both Football and
+  // Sports > Cricket rather than looking like a stray misclassification.
+  if (c.also) {
+    const viewingPrimary = state.category === c.category;
+    const other = viewingPrimary ? c.also : { category: c.category, subcategory: c.subcategory };
+    const tag = document.createElement('span');
+    tag.className = 'also-tag';
+    tag.textContent = 'also: ' + other.category;
+    tag.title = 'Also listed under ' + other.category + ' › ' + other.subcategory;
+    b.appendChild(tag);
   }
 
   const fav = document.createElement('button');
