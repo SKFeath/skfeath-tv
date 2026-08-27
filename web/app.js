@@ -352,7 +352,15 @@ function renderCats() {
     }));
   }
 
-  for (const t of state.tree) {
+  // Football is pinned right under Favourites/All - this site exists to
+  // watch football, so it should not be buried alphabetically between
+  // Entertainment and Kids. Everything else follows A-Z.
+  const PINNED = ['Football'];
+  const pinned = state.tree.filter((t) => PINNED.includes(t.category))
+    .sort((a, b) => PINNED.indexOf(a.category) - PINNED.indexOf(b.category));
+  const rest = state.tree.filter((t) => !PINNED.includes(t.category));
+
+  for (const t of pinned.concat(rest)) {
     const catMatches = t.category.toLowerCase().includes(q);
     const subMatches = t.subcategories.filter((s) => s.name.toLowerCase().includes(q));
     if (q && !catMatches && !subMatches.length) continue;
@@ -685,6 +693,7 @@ function boot() {
 
   state.channels = (window.SNAPSHOT || []).map((c) => ({ ...c }));
   state.tree = window.TREE || [];
+  state.open.Football = true; // the site's whole purpose - start expanded
   state.favs = new Set(store.get(FAV_KEY, []));
   state.hideDead = store.get(HIDE_KEY, true);
   el('hide-dead').checked = state.hideDead;
