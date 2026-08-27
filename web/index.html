@@ -4,45 +4,124 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>__SITE_TITLE__</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="brand">__SITE_TITLE__</div>
-      <div class="pill" id="count">-</div>
-      <div class="spacer"></div>
-      <div class="pill" id="health">-</div>
-      <div class="pill" id="freshness">loading…</div>
-      <label class="toggle"><input type="checkbox" id="hide-dead" checked> Hide unavailable</label>
-      <button class="link-btn" id="rescan" title="Test every channel again">Re-check</button>
-    </header>
 
-    <nav class="sidebar" id="cats"></nav>
+<!-- ------------------------------------------------------------------ gate -->
+<div class="gate" id="gate">
+  <form class="gate-card" id="gate-form">
+    <div class="gate-logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><polygon points="6 4 20 12 6 20 6 4" fill="#fff"/></svg>
+    </div>
+    <h1>__SITE_TITLE__</h1>
+    <p>Enter the bro code to continue.</p>
+    <input id="gate-code" type="password" placeholder="bro code" autocomplete="off" autofocus>
+    <button type="submit">Enter</button>
+    <div class="gate-err" id="gate-err"></div>
+  </form>
+</div>
 
-    <div class="main">
-      <section class="stage">
-        <div class="video-box">
-          <video id="video" controls playsinline autoplay></video>
-          <div class="overlay" id="overlay"></div>
+<!-- ----------------------------------------------------------------- shell -->
+<div class="app hidden" id="app">
+  <header class="topbar">
+    <button class="navbtn" id="navbtn" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polygon points="6 4 20 12 6 20 6 4" fill="#fff"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">__SITE_TITLE__</div>
+        <div class="brand-sub">Live TV</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="topmeta">
+      <span class="pill"><span class="dot" id="health-dot"></span><span id="health">ready</span></span>
+      <button class="linkbtn" id="rescan">Re-check</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- categories -->
+    <nav class="sidebar scroll" id="sidebar">
+      <div class="side-label">Browse</div>
+      <div class="catsearch">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="cat-search" type="search" placeholder="Search categories…" autocomplete="off">
+      </div>
+      <div id="cats"></div>
+      <div class="side-hint">↑ / ↓ switches channel</div>
+    </nav>
+
+    <!-- player -->
+    <section class="stage scroll">
+      <div class="video-box">
+        <video id="video" controls playsinline autoplay></video>
+        <div class="state" id="state"></div>
+      </div>
+
+      <div class="crumb">
+        <span>Live TV</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        <span class="now" id="crumb">All channels</span>
+      </div>
+
+      <div class="metarow">
+        <div class="metaleft">
+          <img class="metalogo hidden" id="meta-logo" alt="">
+          <div style="min-width:0">
+            <div class="metakicker">Now playing</div>
+            <div class="metatitle" id="now-title">Nothing playing</div>
+            <div class="metasub" id="now-meta">Pick a channel to start</div>
+          </div>
         </div>
-        <div class="now">
-          <h2 id="now-title">Nothing playing</h2>
-          <div class="meta" id="now-meta"></div>
+        <div class="stats">
+          <div class="stat ok"><b id="stat-ok">–</b><span>reachable</span></div>
+          <div class="stat off"><b id="stat-off">–</b><span>unavailable</span></div>
         </div>
-      </section>
+      </div>
 
-      <aside class="channels">
-        <div class="search-row">
+      <div class="navrow">
+        <button id="prev">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          Previous
+        </button>
+        <button id="next">
+          Next
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- channels -->
+    <aside class="listpane">
+      <div class="listhead">
+        <div class="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           <input id="search" type="search" placeholder="Search channels…" autocomplete="off">
         </div>
-        <div class="list" id="list"></div>
-      </aside>
-    </div>
+        <div class="listopts">
+          <label class="toggle"><input type="checkbox" id="hide-dead" checked> Hide unavailable</label>
+          <span class="pill" id="count">–</span>
+        </div>
+      </div>
+      <div class="list scroll" id="list"></div>
+      <div class="listfoot">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span id="foot">loading…</span>
+      </div>
+    </aside>
   </div>
+</div>
 
-  <script src="hls.min.js"></script>
-  <script src="channels.js"></script>
-  <script src="app.js"></script>
+<script src="hls.min.js"></script>
+<script src="channels.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

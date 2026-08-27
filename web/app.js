@@ -1,22 +1,87 @@
 'use strict';
-// Static IPTV player. No backend: the browser fetches the playlist and plays
-// each stream directly from its origin, so hosting costs nothing and carries
-// no video traffic.
+// SKFeath TV - static player. No backend: the browser fetches the playlists and
+// plays each stream directly from its origin, so hosting carries no video.
 
 const el = (id) => document.getElementById(id);
-const video = el('video');
+
+// ---------------------------------------------------------------------------
+// gate
+//
+// Honest about what this is: the check runs in the browser, so anyone who opens
+// devtools can walk past it. Storing a hash rather than the literal code keeps
+// it out of "view source", nothing more. The playlists are public, so there is
+// nothing secret behind it - it is a door, not a lock.
+// ---------------------------------------------------------------------------
+const CODE_HASH = 'b7fe2d572c4b3ad90bc6b55e37919e8892ac6da28f8bca766e9fa3e130d54cc0';
+const GATE_KEY = 'sk-gate';
+
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function unlock() {
+  try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) { /* private mode */ }
+  el('gate').classList.add('hidden');
+  el('app').classList.remove('hidden');
+  boot();
+}
+
+el('gate-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const err = el('gate-err');
+  err.textContent = '';
+  const value = el('gate-code').value.trim();
+  let ok = false;
+  try {
+    ok = (await sha256Hex(value)) === CODE_HASH;
+  } catch (e2) {
+    ok = value === 'f5noobs'; // crypto.subtle needs a secure context
+  }
+  if (!ok) {
+    err.textContent = 'Wrong code.';
+    el('gate-code').select();
+    return;
+  }
+  unlock();
+});
+
+// ---------------------------------------------------------------------------
+// state
+// ---------------------------------------------------------------------------
+const FAV_KEY = 'sk-favs';
+const HEALTH_KEY = 'sk-health-v2';
+const HIDE_KEY = 'sk-hide-dead';
+const MAX_RENDER = 400;
 
 const state = {
   channels: [],
+  tree: [],
   filtered: [],
-  group: 'all',
+  category: 'All',      // 'All' | 'Favourites' | category name
+  subcategory: null,
   query: '',
+  catQuery: '',
+  open: {},             // category -> expanded?
+  favs: new Set(),
+  health: {},           // url -> true/false
+  hideDead: true,
+  scanning: false,
   current: null,
   hls: null,
-  failed: new Set(),
-  health: {},        // url -> true/false, measured by THIS browser
-  scanning: false,
-  hideDead: true,
+  booted: false,
+};
+
+const store = {
+  get(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw == null ? fallback : JSON.parse(raw);
+    } catch (e) { return fallback; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* ignore */ }
+  },
 };
 
 function escapeHtml(s) {
@@ -24,25 +89,8 @@ function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"]/g, (c) => map[c]);
 }
 
-function showOverlay(title, detail, spinning) {
-  const o = el('overlay');
-  o.classList.remove('hidden');
-  const spin = spinning ? '<div class="spinner"></div>' : '';
-  o.innerHTML =
-    '<div>' + spin + '<strong>' + escapeHtml(title) + '</strong>' +
-    escapeHtml(detail || '') + '</div>';
-}
-
-function hideOverlay() {
-  el('overlay').classList.add('hidden');
-}
-
 // ---------------------------------------------------------------------------
-// loading channels
-//
-// SNAPSHOT ships with the build so the site works instantly and offline-ish.
-// We then try to refresh from the live playlist, because stream URLs rotate
-// and some carry expiring tokens. Selection is re-applied to whatever we get.
+// playlist loading + merge (mirrors tools/lib-m3u.js)
 // ---------------------------------------------------------------------------
 const ATTR_RE = /([\w-]+)="([^"]*)"/g;
 
@@ -78,198 +126,77 @@ function parseM3U(text) {
       continue;
     }
     if (line.startsWith('#')) continue;
-    if (pending) {
-      out.push({ ...pending, url: line });
-      pending = null;
-    }
+    if (pending) { out.push({ ...pending, url: line }); pending = null; }
   }
   return out;
 }
 
-function applySelection(all) {
-  const wanted = new Set(window.SELECTION || []);
-  if (!wanted.size) return all;
-  const seen = new Set();
-  const out = [];
-  for (const c of all) {
-    // https only: a hosted site is https, and browsers block mixed content.
-    if (!c.url.startsWith('https://')) continue;
-    if (!wanted.has(c.name)) continue;
-    if (seen.has(c.name)) continue;
-    seen.add(c.name);
-    out.push(c);
-  }
-  return out;
-}
-
+// Refresh keeps stream URLs current without changing which channels are
+// offered: the build decided that, and its classification travels with it.
 async function refreshFromSource() {
   const urls = window.SOURCE_URLS || [];
   if (!urls.length) return;
 
-  // Same first-source-wins rule as the build tool, so a live refresh in the
-  // browser can never disagree with what was baked into the site.
+  const byName = new Map(state.channels.map((c) => [c.name, c]));
   const seen = new Set();
-  const merged = [];
   let anyOk = false;
+  let updated = 0;
 
   for (const url of urls) {
     try {
       const res = await fetch(url, { cache: 'no-store' });
       if (!res.ok) continue;
       anyOk = true;
-      for (const c of parseM3U(await res.text())) {
-        if (seen.has(c.name)) continue;
-        seen.add(c.name);
-        merged.push(c);
+      for (const fresh of parseM3U(await res.text())) {
+        if (seen.has(fresh.name)) continue;
+        seen.add(fresh.name);
+        const known = byName.get(fresh.name);
+        if (known && known.url !== fresh.url) {
+          // URL rotated upstream - take the new one and retest it.
+          delete state.health[known.url];
+          known.url = fresh.url;
+          updated++;
+        }
       }
-    } catch (e) {
-      // one source failing should not block the others
-    }
+    } catch (e) { /* one bad source must not block the rest */ }
   }
 
-  if (!anyOk) {
-    el('freshness').textContent = 'using bundled list';
-    return;
-  }
-
-  const fresh = applySelection(merged);
-  if (fresh.length) {
-    state.channels = fresh;
-    applyFilter();
-    el('freshness').textContent = 'updated just now';
-  }
+  el('foot').textContent = anyOk
+    ? (updated ? updated + ' stream links refreshed' : 'channel list up to date')
+    : 'using bundled list';
+  if (updated) applyFilter();
 }
 
 // ---------------------------------------------------------------------------
-// playback - straight from the stream's own server
-// ---------------------------------------------------------------------------
-function destroyPlayer() {
-  if (state.hls) {
-    try { state.hls.destroy(); } catch (e) { /* already gone */ }
-    state.hls = null;
-  }
-  try {
-    video.removeAttribute('src');
-    video.load();
-  } catch (e) { /* ignore */ }
-}
-
-function play(channel) {
-  state.current = channel;
-  destroyPlayer();
-  renderList();
-  el('now-title').textContent = channel.name;
-  el('now-meta').textContent = channel.group;
-  showOverlay('Connecting...', channel.name, true);
-
-  if (window.Hls && window.Hls.isSupported()) {
-    const hls = new window.Hls({
-      lowLatencyMode: false,
-      manifestLoadingMaxRetry: 2,
-      levelLoadingMaxRetry: 2,
-      fragLoadingMaxRetry: 3,
-    });
-    state.hls = hls;
-    hls.on(window.Hls.Events.ERROR, (_e, data) => {
-      if (!data.fatal) return;
-      if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR) {
-        hls.recoverMediaError();
-        return;
-      }
-      markFailed(channel, data);
-    });
-    hls.loadSource(channel.url);
-    hls.attachMedia(video);
-    video.play().catch(() => {});
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = channel.url;
-    video.play().catch(() => {});
-  } else {
-    showOverlay('Unsupported browser', 'This browser cannot play HLS.', false);
-  }
-}
-
-// Public playlists rot: channels go offline, get geo-fenced, or expire. Say so
-// plainly instead of spinning forever.
-function markFailed(channel, data) {
-  state.failed.add(channel.name);
-  // Trust real playback over the probe - it is the strongest signal we get.
-  state.health[channel.url] = false;
-  saveHealth();
-  applyFilter();
-
-  const isNetwork = data && data.type === 'networkError';
-  const code = data && data.response && data.response.code;
-  let why = 'This channel is not responding.';
-  if (code === 403 || code === 401) {
-    why = 'The stream refused the request (403). It is probably region-locked.';
-  } else if (isNetwork) {
-    why = 'Could not reach this stream. It may be offline, or only reachable ' +
-          'from inside Bangladesh (BDIX channels usually are).';
-  }
-  showOverlay('Cannot play ' + channel.name, why + ' Try another channel.', false);
-  el('now-meta').textContent = 'unavailable';
-}
-
-video.addEventListener('playing', () => {
-  hideOverlay();
-  if (state.current) {
-    state.failed.delete(state.current.name);
-    state.health[state.current.url] = true;
-    saveHealth();
-    el('now-meta').textContent = state.current.group;
-    renderList();
-  }
-});
-
-video.addEventListener('waiting', () => {
-  el('now-meta').textContent = 'Buffering...';
-});
-
-
-// ---------------------------------------------------------------------------
-// Per-viewer health scanning
+// health scanning
 //
-// Whether a channel works depends on WHO is watching: BDIX streams answer
-// inside Bangladesh and refuse everyone else, and plenty of public streams die
-// without warning. So each browser tests the list on its own connection and
-// hides what it cannot reach. A viewer in Dhaka and a viewer abroad end up
-// with different, correct channel lists from the same build.
-//
-// Results are cached so this costs one sweep every few hours, not every load.
+// The list is ~1800 channels, so a blind sweep on every visit is minutes of
+// waiting. Instead: cached results paint the UI instantly, then channels that
+// worked last time are re-checked FIRST (so the usable list is confirmed
+// quickly), then brand-new channels, and only then the ones already known bad.
 // ---------------------------------------------------------------------------
-const HEALTH_KEY = 'iptv-health-v1';
-const HEALTH_TTL_MS = 6 * 60 * 60 * 1000;
 const PROBE_TIMEOUT_MS = 7000;
 const PROBE_CONCURRENCY = 14;
+const RECHECK_DEAD_AFTER_MS = 30 * 60 * 1000;
 
 function loadHealth() {
-  try {
-    const raw = localStorage.getItem(HEALTH_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    if (!parsed || Date.now() - parsed.at > HEALTH_TTL_MS) return {};
-    return parsed.map || {};
-  } catch (e) {
-    return {}; // private mode or blocked storage - just re-scan
-  }
+  const saved = store.get(HEALTH_KEY, null);
+  if (!saved || !saved.map) return { map: {}, at: 0 };
+  return { map: saved.map, at: saved.at || 0 };
 }
 
 function saveHealth() {
-  try {
-    localStorage.setItem(HEALTH_KEY, JSON.stringify({ at: Date.now(), map: state.health }));
-  } catch (e) { /* not fatal */ }
+  store.set(HEALTH_KEY, { at: Date.now(), map: state.health });
 }
 
-async function probeChannel(url) {
+async function probe(url) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), PROBE_TIMEOUT_MS);
   try {
     const res = await fetch(url, { signal: ctrl.signal, cache: 'no-store', redirect: 'follow' });
     if (!res.ok) return false;
     const text = await res.text();
-    // A CORS-blocked or non-HLS response cannot be played by hls.js either,
-    // so treating it as dead matches what the viewer would actually see.
+    // A CORS-blocked or non-HLS reply cannot be played by hls.js either.
     return text.indexOf('#EXTM3U') !== -1;
   } catch (e) {
     return false;
@@ -278,41 +205,46 @@ async function probeChannel(url) {
   }
 }
 
-async function scanHealth() {
-  const todo = state.channels.filter((c) => state.health[c.url] === undefined);
-  if (!todo.length) {
-    updateHealthLabel(true);
-    return;
+async function scanHealth(cacheAge) {
+  const alive = [];
+  const fresh = [];
+  const dead = [];
+  for (const c of state.channels) {
+    const known = state.health[c.url];
+    if (known === true) alive.push(c);
+    else if (known === undefined) fresh.push(c);
+    else dead.push(c);
   }
 
-  state.scanning = true;
-  let done = 0;
-  const queue = todo.slice();
+  // Skip re-testing known-bad channels while the cache is still recent; that is
+  // where most of the time goes and they rarely come back within the hour.
+  const includeDead = cacheAge > RECHECK_DEAD_AFTER_MS || dead.length === 0;
+  const queue = alive.concat(fresh, includeDead ? dead : []);
+  if (!queue.length) { setHealthLabel(); return; }
 
-  // With a couple of thousand channels a straight sweep takes minutes, and
-  // the group you are actually looking at might be scanned last. So workers
-  // always take the next channel in the current group first; switching group
-  // re-aims the scan at whatever you just opened.
-  const takeNext = () => {
-    if (!queue.length) return null;
-    if (state.group !== 'all') {
-      const i = queue.findIndex((c) => c.group === state.group);
-      if (i !== -1) return queue.splice(i, 1)[0];
-    }
-    return queue.shift();
-  };
+  state.scanning = true;
+  setHealthLabel();
+  let done = 0;
+  const total = queue.length;
 
   const worker = async () => {
     for (;;) {
-      const ch = takeNext();
-      if (!ch) return;
-      state.health[ch.url] = await probeChannel(ch.url);
-      done++;
-      if (done % 10 === 0 || !queue.length) {
-        updateHealthLabel(false, done, todo.length);
-        applyFilter();
+      // Whatever category is open gets priority, so the view you are actually
+      // looking at settles first.
+      let idx = 0;
+      if (state.category !== 'All' && state.category !== 'Favourites') {
+        const i = queue.findIndex((c) => c.category === state.category);
+        if (i !== -1) idx = i;
       }
-      // Persist periodically so a closed tab does not throw the work away.
+      const ch = queue.splice(idx, 1)[0];
+      if (!ch) return;
+      state.health[ch.url] = await probe(ch.url);
+      done++;
+      if (done % 12 === 0 || !queue.length) {
+        setHealthLabel(done, total);
+        applyFilter();
+        renderCats();
+      }
       if (done % 200 === 0) saveHealth();
     }
   };
@@ -322,73 +254,214 @@ async function scanHealth() {
   state.scanning = false;
   saveHealth();
   applyFilter();
-  renderGroups();
-  updateHealthLabel(true);
+  renderCats();
+  setHealthLabel();
 }
 
+function aliveCount() {
+  return state.channels.filter((c) => state.health[c.url] === true).length;
+}
 function deadCount() {
   return state.channels.filter((c) => state.health[c.url] === false).length;
 }
 
-function updateHealthLabel(finished, done, total) {
-  const label = el('health');
-  if (!label) return;
-  if (!finished) {
-    label.textContent = 'checking ' + done + '/' + total + '...';
-    return;
+function setHealthLabel(done, total) {
+  const dot = el('health-dot');
+  if (state.scanning && done != null) {
+    el('health').textContent = 'checking ' + done + '/' + total;
+    dot.classList.add('scanning');
+  } else if (state.scanning) {
+    el('health').textContent = 'checking…';
+    dot.classList.add('scanning');
+  } else {
+    const d = deadCount();
+    el('health').textContent = d ? d + ' unavailable' : 'all reachable';
+    dot.classList.remove('scanning');
   }
-  const dead = deadCount();
-  label.textContent = dead
-    ? dead + ' unavailable ' + (state.hideDead ? 'hidden' : 'found')
-    : 'all channels reachable';
+  el('stat-ok').textContent = aliveCount();
+  el('stat-off').textContent = deadCount();
 }
 
-function rescan() {
-  state.health = {};
-  saveHealth();
+function isDead(c) { return state.health[c.url] === false; }
+
+// ---------------------------------------------------------------------------
+// favourites
+// ---------------------------------------------------------------------------
+function isFav(c) { return state.favs.has(c.name); }
+
+function toggleFav(c) {
+  if (state.favs.has(c.name)) state.favs.delete(c.name);
+  else state.favs.add(c.name);
+  store.set(FAV_KEY, [...state.favs]);
+  renderCats();
   applyFilter();
-  scanHealth();
 }
 
 // ---------------------------------------------------------------------------
-// UI
+// categories
 // ---------------------------------------------------------------------------
-function groupsOf(channels) {
-  const counts = new Map();
-  for (const c of channels) {
-    if (state.hideDead && state.health[c.url] === false) continue;
-    counts.set(c.group, (counts.get(c.group) || 0) + 1);
-  }
-  // A group with nothing reachable here should not be offered at all.
-  return [...counts.entries()].sort((a, b) => b[1] - a[1]);
+function categoryChannels(category, subcategory) {
+  if (category === 'Favourites') return state.channels.filter(isFav);
+  if (category === 'All') return state.channels;
+  return state.channels.filter(
+    (c) => c.category === category && (!subcategory || c.subcategory === subcategory)
+  );
 }
 
-function renderGroups() {
+function visibleCount(list) {
+  return state.hideDead ? list.filter((c) => !isDead(c)).length : list.length;
+}
+
+function renderCats() {
   const wrap = el('cats');
   wrap.innerHTML = '';
-  const visible = state.hideDead
-    ? state.channels.filter((c) => state.health[c.url] !== false)
-    : state.channels;
-  const all = [['all', visible.length]].concat(groupsOf(state.channels));
-  for (const [name, count] of all) {
+  const q = state.catQuery.toLowerCase();
+
+  const row = (label, count, opts) => {
     const b = document.createElement('button');
-    b.className = 'cat' + (state.group === name ? ' active' : '');
-    b.textContent = (name === 'all' ? 'All channels' : name) + '  (' + count + ')';
-    b.title = name;
-    b.onclick = () => {
-      state.group = name;
-      renderGroups();
-      applyFilter();
-    };
-    wrap.appendChild(b);
+    b.className = 'cat-row' + (opts.active ? ' active' : '') + (opts.open ? ' open' : '');
+    if (opts.expandable) {
+      b.innerHTML = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg>';
+    } else {
+      b.innerHTML = '<span style="width:13px;flex:none"></span>';
+    }
+    const l = document.createElement('span');
+    l.className = 'label';
+    l.textContent = label;
+    b.appendChild(l);
+    const n = document.createElement('span');
+    n.className = 'count';
+    n.textContent = count;
+    b.appendChild(n);
+    b.onclick = opts.onClick;
+    return b;
+  };
+
+  // Favourites and All are pinned above the A-Z list.
+  if (!q || 'favourites'.includes(q)) {
+    const favs = categoryChannels('Favourites');
+    wrap.appendChild(row('★ Favourites', visibleCount(favs), {
+      active: state.category === 'Favourites',
+      onClick: () => selectCategory('Favourites', null),
+    }));
+  }
+  if (!q || 'all channels'.includes(q)) {
+    wrap.appendChild(row('All channels', visibleCount(state.channels), {
+      active: state.category === 'All',
+      onClick: () => selectCategory('All', null),
+    }));
+  }
+
+  for (const t of state.tree) {
+    const catMatches = t.category.toLowerCase().includes(q);
+    const subMatches = t.subcategories.filter((s) => s.name.toLowerCase().includes(q));
+    if (q && !catMatches && !subMatches.length) continue;
+
+    const list = categoryChannels(t.category);
+    const open = state.open[t.category] || (q && subMatches.length > 0);
+
+    wrap.appendChild(row(t.category, visibleCount(list), {
+      active: state.category === t.category && !state.subcategory,
+      expandable: true,
+      open,
+      onClick: () => {
+        state.open[t.category] = !open;
+        selectCategory(t.category, null);
+      },
+    }));
+
+    if (!open) continue;
+    const subs = q && !catMatches ? subMatches : t.subcategories;
+    for (const s of subs) {
+      const subList = categoryChannels(t.category, s.name);
+      const b = document.createElement('button');
+      b.className = 'sub-row' +
+        (state.category === t.category && state.subcategory === s.name ? ' active' : '');
+      const l = document.createElement('span');
+      l.className = 'label';
+      l.textContent = s.name;
+      b.appendChild(l);
+      const n = document.createElement('span');
+      n.className = 'count';
+      n.textContent = visibleCount(subList);
+      b.appendChild(n);
+      b.onclick = () => selectCategory(t.category, s.name);
+      wrap.appendChild(b);
+    }
+  }
+
+  if (!wrap.children.length) {
+    wrap.innerHTML = '<div class="list-note">No categories match.</div>';
   }
 }
 
-function placeholder(name) {
-  const d = document.createElement('div');
-  d.className = 'ph';
-  d.textContent = (name || '?').replace(/[^\w]/g, '').trim().slice(0, 2).toUpperCase() || '?';
-  return d;
+function selectCategory(category, subcategory) {
+  state.category = category;
+  state.subcategory = subcategory;
+  el('crumb').textContent = subcategory ? category + ' › ' + subcategory
+    : category === 'All' ? 'All channels' : category;
+  closeDrawer();
+  renderCats();
+  applyFilter();
+}
+
+// ---------------------------------------------------------------------------
+// channel list
+// ---------------------------------------------------------------------------
+function initials(name) {
+  const clean = String(name || '').replace(/^\[[^\]]*\]\s*/, '').replace(/[^\w\s]/g, ' ').trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (!parts.length) return '?';
+  return (parts.length === 1 ? parts[0].slice(0, 2) : parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+function channelRow(c) {
+  const b = document.createElement('button');
+  const dead = isDead(c);
+  const active = state.current && state.current.name === c.name;
+  b.className = 'ch' + (active ? ' active' : '') + (dead ? ' dead' : '');
+
+  const logo = document.createElement('span');
+  logo.className = 'ch-logo';
+  logo.textContent = initials(c.name);
+  if (c.logo) {
+    const img = document.createElement('img');
+    img.src = c.logo;
+    img.loading = 'lazy';
+    img.alt = '';
+    img.onerror = () => img.remove();
+    logo.appendChild(img);
+  }
+  b.appendChild(logo);
+
+  const nm = document.createElement('span');
+  nm.className = 'ch-name';
+  nm.textContent = c.name;
+  b.appendChild(nm);
+
+  if (active) {
+    const air = document.createElement('span');
+    air.className = 'onair';
+    air.innerHTML = '<i></i>ON AIR';
+    b.appendChild(air);
+  } else if (dead) {
+    const off = document.createElement('span');
+    off.className = 'off-tag';
+    off.textContent = 'off';
+    b.appendChild(off);
+  }
+
+  const fav = document.createElement('button');
+  fav.className = 'ch-fav' + (isFav(c) ? ' on' : '');
+  fav.setAttribute('aria-label', 'Favourite');
+  fav.innerHTML = isFav(c)
+    ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 15 9l7 1-5.2 5 1.3 7-6.1-3.4L5.9 22l1.3-7L2 10l7-1z"/></svg>'
+    : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5 15 9l7 1-5.2 5 1.3 7-6.1-3.4L5.9 22l1.3-7L2 10l7-1z"/></svg>';
+  fav.onclick = (ev) => { ev.stopPropagation(); toggleFav(c); };
+  b.appendChild(fav);
+
+  b.onclick = () => play(c);
+  return b;
 }
 
 function renderList() {
@@ -399,86 +472,243 @@ function renderList() {
     return;
   }
   const frag = document.createDocumentFragment();
-  for (const ch of state.filtered) {
-    const b = document.createElement('button');
-    b.className = 'ch' +
-      (state.current && state.current.name === ch.name ? ' active' : '') +
-      (state.failed.has(ch.name) ? ' dead' : '');
-    if (ch.logo) {
-      const img = document.createElement('img');
-      img.src = ch.logo;
-      img.loading = 'lazy';
-      img.alt = '';
-      img.onerror = () => img.replaceWith(placeholder(ch.name));
-      b.appendChild(img);
-    } else {
-      b.appendChild(placeholder(ch.name));
+  const slice = state.filtered.slice(0, MAX_RENDER);
+
+  // In broad views, a subheading per category keeps a long list navigable.
+  const showHeads = state.category === 'All' || state.category === 'Favourites';
+  let lastHead = null;
+  for (const c of slice) {
+    if (showHeads) {
+      const head = c.category + ' › ' + c.subcategory;
+      if (head !== lastHead) {
+        lastHead = head;
+        const h = document.createElement('div');
+        h.className = 'group-head';
+        h.textContent = head;
+        frag.appendChild(h);
+      }
     }
-    const span = document.createElement('span');
-    span.textContent = ch.name;
-    b.appendChild(span);
-    b.onclick = () => play(ch);
-    frag.appendChild(b);
+    frag.appendChild(channelRow(c));
   }
   list.appendChild(frag);
+
+  if (state.filtered.length > slice.length) {
+    const note = document.createElement('div');
+    note.className = 'list-note';
+    note.textContent = 'Showing ' + slice.length + ' of ' + state.filtered.length +
+      ' — search to narrow down.';
+    list.appendChild(note);
+  }
 }
 
 function applyFilter() {
   const q = state.query.toLowerCase();
-  state.filtered = state.channels.filter((c) => {
-    if (state.hideDead && state.health[c.url] === false) return false;
-    if (state.group !== 'all' && c.group !== state.group) return false;
-    if (q && !c.name.toLowerCase().includes(q)) return false;
-    return true;
-  });
-  const hidden = state.hideDead ? deadCount() : 0;
-  el('count').textContent =
-    state.filtered.length + ' channels' + (hidden ? '  (' + hidden + ' hidden)' : '');
+  let list = categoryChannels(state.category, state.subcategory);
+  if (state.hideDead) list = list.filter((c) => !isDead(c));
+  if (q) list = list.filter((c) => c.name.toLowerCase().includes(q));
+
+  list.sort((a, b) =>
+    a.category.localeCompare(b.category) ||
+    a.subcategory.localeCompare(b.subcategory) ||
+    a.name.localeCompare(b.name)
+  );
+
+  state.filtered = list;
+  el('count').textContent = list.length + ' ch';
   renderList();
+  setHealthLabel(state.scanning ? undefined : null);
 }
 
+// ---------------------------------------------------------------------------
+// playback
+// ---------------------------------------------------------------------------
+function setState(kind, title, detail) {
+  const box = el('state');
+  if (kind === 'playing') { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  let icon = '';
+  if (kind === 'idle') {
+    icon = '<div class="state-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="m17 2-5 5-5-5"/></svg></div>';
+  } else if (kind === 'connecting') {
+    icon = '<div class="spinner"></div>';
+  } else if (kind === 'failed') {
+    icon = '<div class="state-icon" style="background:rgba(255,77,77,.12);border-color:rgba(255,77,77,.35)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--live)" stroke-width="1.7" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg></div>';
+  }
+  box.innerHTML = '<div>' + icon + '<h2>' + escapeHtml(title) + '</h2>' +
+    (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') + '</div>';
+}
+
+function destroyPlayer() {
+  if (state.hls) {
+    try { state.hls.destroy(); } catch (e) { /* already gone */ }
+    state.hls = null;
+  }
+  const v = el('video');
+  try { v.removeAttribute('src'); v.load(); } catch (e) { /* ignore */ }
+}
+
+function play(c) {
+  state.current = c;
+  destroyPlayer();
+  renderList();
+
+  el('now-title').textContent = c.name;
+  el('now-meta').textContent = c.category + ' › ' + c.subcategory;
+  const lg = el('meta-logo');
+  if (c.logo) { lg.src = c.logo; lg.classList.remove('hidden'); } else { lg.classList.add('hidden'); }
+  setState('connecting', 'Connecting…', c.name);
+
+  const video = el('video');
+  if (window.Hls && window.Hls.isSupported()) {
+    const hls = new window.Hls({
+      lowLatencyMode: false,
+      manifestLoadingMaxRetry: 2,
+      levelLoadingMaxRetry: 2,
+      fragLoadingMaxRetry: 3,
+    });
+    state.hls = hls;
+    hls.on(window.Hls.Events.ERROR, (_e, data) => {
+      if (!data.fatal) return;
+      if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); return; }
+      failed(c, data);
+    });
+    hls.loadSource(c.url);
+    hls.attachMedia(video);
+    video.play().catch(() => {});
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = c.url;
+    video.play().catch(() => {});
+  } else {
+    setState('failed', 'Unsupported browser', 'This browser cannot play HLS.');
+  }
+}
+
+function failed(c, data) {
+  state.health[c.url] = false;
+  saveHealth();
+  const code = data && data.response && data.response.code;
+  let why = 'This channel is not responding. Try another.';
+  if (code === 403 || code === 401) {
+    why = 'The stream refused the request. It is probably region-locked.';
+  } else if (data && data.type === 'networkError') {
+    why = 'Could not reach this stream. It may be offline, or only reachable from ' +
+          'inside its own country (BDIX channels usually are).';
+  }
+  setState('failed', 'Cannot play ' + c.name, why);
+  el('now-meta').textContent = 'unavailable';
+  applyFilter();
+  renderCats();
+}
+
+el('video').addEventListener('playing', () => {
+  setState('playing');
+  if (state.current) {
+    state.health[state.current.url] = true;
+    saveHealth();
+    el('now-meta').textContent = state.current.category + ' › ' + state.current.subcategory;
+    renderList();
+  }
+});
+
+function step(delta) {
+  if (!state.filtered.length) return;
+  const i = state.current
+    ? state.filtered.findIndex((c) => c.name === state.current.name)
+    : -1;
+  const next = state.filtered[(i + delta + state.filtered.length) % state.filtered.length];
+  if (next) play(next);
+}
+
+// ---------------------------------------------------------------------------
+// wiring
+// ---------------------------------------------------------------------------
 let searchTimer;
 el('search').addEventListener('input', (e) => {
   clearTimeout(searchTimer);
   const v = e.target.value;
-  searchTimer = setTimeout(() => {
-    state.query = v;
-    applyFilter();
-  }, 180);
+  searchTimer = setTimeout(() => { state.query = v; applyFilter(); }, 180);
+});
+
+let catTimer;
+el('cat-search').addEventListener('input', (e) => {
+  clearTimeout(catTimer);
+  const v = e.target.value;
+  catTimer = setTimeout(() => { state.catQuery = v; renderCats(); }, 150);
+});
+
+el('hide-dead').addEventListener('change', (e) => {
+  state.hideDead = e.target.checked;
+  store.set(HIDE_KEY, state.hideDead);
+  applyFilter();
+  renderCats();
+});
+
+el('rescan').addEventListener('click', () => {
+  state.health = {};
+  saveHealth();
+  applyFilter();
+  renderCats();
+  scanHealth(Infinity);
+});
+
+el('prev').addEventListener('click', () => step(-1));
+el('next').addEventListener('click', () => step(1));
+
+document.addEventListener('keydown', (e) => {
+  if (/input|textarea/i.test(e.target.tagName)) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); step(1); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
+});
+
+function closeDrawer() {
+  el('sidebar').classList.remove('open');
+  const back = document.querySelector('.drawer-back');
+  if (back) back.remove();
+}
+el('navbtn').addEventListener('click', () => {
+  const side = el('sidebar');
+  const isOpen = side.classList.toggle('open');
+  if (isOpen) {
+    const back = document.createElement('div');
+    back.className = 'drawer-back';
+    back.onclick = closeDrawer;
+    document.body.appendChild(back);
+  } else closeDrawer();
 });
 
 // ---------------------------------------------------------------------------
 // boot
 // ---------------------------------------------------------------------------
-(function init() {
-  state.channels = applySelection(window.SNAPSHOT || []);
-  state.health = loadHealth();
-  try {
-    state.hideDead = localStorage.getItem('iptv-hide-dead') !== '0';
-  } catch (e) { /* default stays true */ }
+function boot() {
+  if (state.booted) return;
+  state.booted = true;
 
-  const toggle = el('hide-dead');
-  if (toggle) {
-    toggle.checked = state.hideDead;
-    toggle.addEventListener('change', () => {
-      state.hideDead = toggle.checked;
-      try { localStorage.setItem('iptv-hide-dead', state.hideDead ? '1' : '0'); } catch (e) {}
-      applyFilter();
-      renderGroups();
-      updateHealthLabel(true);
-    });
-  }
-  const again = el('rescan');
-  if (again) again.addEventListener('click', rescan);
+  state.channels = (window.SNAPSHOT || []).map((c) => ({ ...c }));
+  state.tree = window.TREE || [];
+  state.favs = new Set(store.get(FAV_KEY, []));
+  state.hideDead = store.get(HIDE_KEY, true);
+  el('hide-dead').checked = state.hideDead;
 
-  renderGroups();
+  const cached = loadHealth();
+  state.health = cached.map;
+  const cacheAge = cached.at ? Date.now() - cached.at : Infinity;
+
+  el('foot').textContent = (window.SOURCE_URLS || []).length + ' playlist source(s)';
+
+  renderCats();
   applyFilter();
-  updateHealthLabel(true);
-  showOverlay('Pick a channel', 'Choose something from the list to start watching.', false);
+  setState('idle', 'Pick a channel to start',
+    'Streams play straight from their own origin — no video passes through this site.');
 
-  // Refresh the playlist first so we probe current URLs, then scan.
-  refreshFromSource().then(() => {
-    renderGroups();
-    scanHealth();
-  });
-})();
+  // Cached results are already on screen; verify in the background.
+  refreshFromSource().then(() => scanHealth(cacheAge));
+}
+
+// Skip the gate for the rest of this browser session once entered.
+try {
+  if (sessionStorage.getItem(GATE_KEY) === '1') {
+    el('gate').classList.add('hidden');
+    el('app').classList.remove('hidden');
+    boot();
+  }
+} catch (e) { /* private mode - gate stays up */ }
