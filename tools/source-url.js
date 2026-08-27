@@ -13,6 +13,11 @@ const SOURCE_URLS = [
   'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/main/playlist.m3u',
   // Free-TV: large international list, grouped by country.
   'https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8',
+  // NOTE: iptv-org's sports.m3u was evaluated (Setanta Sports, GolTV Latin
+  // America) but everything worth adding from it turned out to be plain
+  // http:// - blocked as mixed content on this https site - so it isn't
+  // wired in. Re-add it here if a genuinely https, non-restream find turns
+  // up in it later.
 ];
 
 module.exports = { SOURCE_URLS };
