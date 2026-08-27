@@ -681,6 +681,42 @@ el('rescan').addEventListener('click', () => {
   scanHealth(Infinity);
 });
 
+// "Reachable" only means anything from the connection that measured it -
+// BDIX channels reach a Bangladeshi visitor and refuse everyone else, so this
+// list only has meaning for the browser that generated it. That's why it's a
+// button, not a fixed file: it always reflects the exporter's own network.
+el('export-reachable').addEventListener('click', () => {
+  const alive = state.channels
+    .filter((c) => state.health[c.url] === true)
+    .sort((a, b) => a.category.localeCompare(b.category) || a.subcategory.localeCompare(b.subcategory) || a.name.localeCompare(b.name));
+
+  if (!alive.length) {
+    alert('Nothing has tested reachable yet. Wait for the scan to finish (see the status pill, top right) and try again.');
+    return;
+  }
+
+  const lines = ['#EXTM3U'];
+  let lastGroup = null;
+  for (const c of alive) {
+    const group = c.category + ' - ' + c.subcategory;
+    if (group !== lastGroup) lastGroup = group;
+    lines.push('#EXTINF:-1 group-title="' + group.replace(/"/g, "'") + '"' +
+      (c.logo ? ' tvg-logo="' + c.logo.replace(/"/g, "'") + '"' : '') + ',' + c.name);
+    lines.push(c.url);
+  }
+
+  const blob = new Blob([lines.join('\n') + '\n'], { type: 'audio/x-mpegurl' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = 'reachable-' + stamp + '.m3u';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
 el('prev').addEventListener('click', () => step(-1));
 el('next').addEventListener('click', () => step(1));
 
