@@ -107,7 +107,11 @@ const CRICKET = [
 ];
 
 const MOTORSPORT = ['motorsport', 'formula 1', ' f1', 'f1 ', 'motogp', 'nascar', 'rally', 'motor vision', 'redbull tv'];
-const COMBAT = ['ufc', 'wwe', 'boxing', 'mma', 'fight'];
+// 'mma' as a plain substring matches inside ordinary words (Italian
+// "immagine" = image, "drammatico" = dramatic) - needs a word boundary.
+// The other tokens are long enough that this isn't a real risk.
+const COMBAT = ['ufc', 'wwe', 'boxing', 'fight'];
+const COMBAT_MMA_RE = /\bmma\b/;
 const US_SPORTS = ['nba', 'nfl', 'nhl', 'mlb', 'espn', 'fanduel', 'draftkings', 'pac-12', 'pac 12'];
 const FOOTBALL_GENERIC = ['football', 'futbol', 'fútbol', 'futebol', 'soccer', 'calcio', 'fussball'];
 const SPORT_GENERIC = [
@@ -151,6 +155,11 @@ const DOCUMENTARY = [
   'investigation', 'crime', 'bbc earth', 'insight', 'curiosity', 'viasat',
 ];
 const WEATHER = ['weather', 'meteo', 'clima'];
+const SHOPPING = ['qvc', 'shop', 'shopping', 'jewellery', 'jewelry', 'gems tv', 'gemstv', 'tjc', 'hobby maker'];
+const PARLIAMENT = [
+  'parliament', 'camera dei deputati', 'senato', 'folketinget', 'riigikogu',
+  'bundestag', 'assembl', 'sejm',
+];
 
 // Bangladesh-facing groups from the BDIX playlist.
 const BD_GROUPS = [
@@ -204,7 +213,7 @@ function classifySportByName(name) {
 
   if (anyOf(name, CRICKET)) return { category: 'Sports', subcategory: 'Cricket' };
   if (anyOf(name, MOTORSPORT)) return { category: 'Sports', subcategory: 'Motorsport' };
-  if (anyOf(name, COMBAT)) return { category: 'Sports', subcategory: 'Combat Sports' };
+  if (anyOf(name, COMBAT) || COMBAT_MMA_RE.test(name)) return { category: 'Sports', subcategory: 'Combat Sports' };
   if (anyOf(name, US_SPORTS)) return { category: 'Sports', subcategory: 'US Sports' };
   if (anyOf(name, SPORT_GENERIC)) return { category: 'Sports', subcategory: 'All Sports' };
 
@@ -293,6 +302,16 @@ function classify(channel) {
   // --- weather -------------------------------------------------------------
   if (anyOf(name, WEATHER) || group === 'weather') {
     return { category: 'Lifestyle', subcategory: 'Weather' };
+  }
+
+  // --- shopping --------------------------------------------------------------
+  if (anyOf(name, SHOPPING)) {
+    return { category: 'Lifestyle', subcategory: 'Shopping' };
+  }
+
+  // --- parliament / government proceedings ----------------------------------
+  if (anyOf(name, PARLIAMENT) || group.includes('parliament')) {
+    return { category: 'News', subcategory: 'Parliament' };
   }
 
   // --- Bangladesh ----------------------------------------------------------
