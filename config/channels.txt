@@ -1983,6 +1983,21 @@ Omroep West
 # Congress Channel 1 Ⓨ   <- links to a web page, not a stream
 # Congress Channel 2 Ⓨ   <- links to a web page, not a stream
 
+## Bangladeshi  (13)
+ATN News
+ATN Bangla
+N TV
+DBC News
+Banglavision
+SA TV
+Enter TV
+Ekushe TV
+Me Tv
+SRK
+Channel 24
+Jamuna TV HD 2
+Nagorik TV
+
 ## Denmark  (12)
 DR1 Ⓖ
 DR2 Ⓖ
@@ -2140,18 +2155,6 @@ TVP Kultura 2
 4fun.tv Ⓢ
 TV Republika
 
-## Bangladeshi  (10)
-ATN News
-ATN Bangla
-N TV
-DBC News
-Banglavision
-SA TV
-Enter TV
-Ekushe TV
-Me Tv
-SRK
-
 ## ISLAMIC CHANNELS  (9)
 Unnamed
 QURAN RADIOTV SMC
@@ -2236,6 +2239,15 @@ CNBC Europe
 Ausbiz
 Moconomy
 
+## Kids  (7)
+BBC Cbeebies
+PBS Kids
+Cartoon Network
+# Nursary Rhymes   <- http-only, cannot play on an https site
+Duronto TV
+Nick Sonic Bangla
+Nick JR
+
 ## Costa Rica  (7)
 Canal 1
 Canal 2 CDR
@@ -2317,12 +2329,12 @@ Bengali Beats
 Zoom
 Sangeet Bhojpuri
 
-## Kids  (5)
-BBC Cbeebies
-PBS Kids
-Cartoon Network
-# Nursary Rhymes   <- http-only, cannot play on an https site
-Duronto TV
+## Documentary  (5)
+Insight
+REAL WILD
+Discover Pakistan
+Love Natural 4K
+National Geographic
 
 ## CARTOON Drama  (5)
 Gopal Bhar TV
@@ -2405,12 +2417,6 @@ BTV News
 Mundial Sports HD
 A SPOR
 Real Madrid TV
-
-## Documentary  (4)
-Insight
-REAL WILD
-Discover Pakistan
-Love Natural 4K
 
 ## Montenegro  (4)
 TVCG 1 Ⓖ
@@ -2540,6 +2546,10 @@ MonacoInfo
 San Marino Rtv
 San Marino Rtv Sport
 
+## Indian Bangla  (2)
+Enter 10 Bangla
+Star Jalsha Movie
+
 ## Welcome to PlayZ TV | New App  (1)
 Welcome to PlayZ TV
 
@@ -2590,6 +2600,3 @@ Folx Slovenija
 
 ## Documentaries (AR)  (1)
 Al Jazeera Documentary Ⓖ
-
-## Indian Bangla  (1)
-Enter 10 Bangla
