@@ -1,5 +1,6 @@
 'use strict';
 // Shared M3U parsing for the build tools and the static site.
+const fs = require('fs');
 const ATTR_RE = /([\w-]+)="([^"]*)"/g;
 
 // The title is separated from the attributes by the first comma that is NOT
@@ -112,4 +113,27 @@ function unplayableReason(url) {
   return null;
 }
 
-module.exports = { parseM3U, fetchAndMerge, unplayableReason };
+/**
+ * Like fetchAndMerge, but also folds in a LOCAL extras file after the remote
+ * sources. Reading extras from disk (rather than its GitHub raw URL) avoids
+ * two problems: the raw CDN caching a stale copy for minutes after a push,
+ * and the chicken-and-egg of having to push before the build can see it.
+ * Remote sources still win any name clash (extras are appended last).
+ */
+async function fetchAndMergeWithExtras(remoteUrls, extrasPath) {
+  const merged = await fetchAndMerge(remoteUrls);
+  if (extrasPath && fs.existsSync(extrasPath)) {
+    const seen = new Set(merged.channels.map((c) => c.name));
+    let added = 0;
+    for (const c of parseM3U(fs.readFileSync(extrasPath, 'utf8'))) {
+      if (seen.has(c.name)) continue;
+      seen.add(c.name);
+      merged.channels.push({ ...c, source: 'local:extras' });
+      added++;
+    }
+    merged.sources.push({ url: 'config/extras.m3u (local file)', ok: true, total: added, added });
+  }
+  return merged;
+}
+
+module.exports = { parseM3U, fetchAndMerge, fetchAndMergeWithExtras, unplayableReason };

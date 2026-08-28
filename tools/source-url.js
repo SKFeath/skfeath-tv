@@ -1,26 +1,35 @@
 'use strict';
-// The playlists the site is built from. Add or remove URLs to change what
-// feeds the whole site.
+// Where the site's channels come from.
 //
-// Each URL must send CORS headers (Access-Control-Allow-Origin), because the
-// browser fetches it directly. GitHub raw does.
+// Two kinds of source:
+//  - REMOTE_SOURCES: big public playlists, fetched fresh over the network.
+//    Each must send CORS headers (the browser fetches them directly). GitHub
+//    raw does.
+//  - config/extras.m3u: a small, hand-vetted local file for one-off finds.
+//    The BUILD reads this from disk (not its GitHub URL) so a rebuild never
+//    waits on GitHub's raw CDN cache, and you don't have to push before you
+//    can build. The browser still gets its URL (below) for live refresh.
 //
-// When the same channel name appears in more than one playlist, the copy from
-// whichever URL is listed FIRST wins and the rest are dropped - so order
-// matters if you care which source's link is used for a given channel.
-const SOURCE_URLS = [
+// On a name clash, the copy from whichever REMOTE source is listed first wins;
+// extras are folded in last and only add names not already present.
+
+const REMOTE_SOURCES = [
   // BDIX / Bangladesh - listed first so its links win on any name clash.
   'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/main/playlist.m3u',
   // Free-TV: large international list, grouped by country.
   'https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8',
-  // Hand-picked one-off finds, checked individually rather than pulled from
-  // a bulk playlist. See config/extras.m3u.
-  'https://raw.githubusercontent.com/SKFeath/skfeath-tv/main/config/extras.m3u',
-  // NOTE: iptv-org's sports.m3u was evaluated (Setanta Sports, GolTV Latin
-  // America) but everything worth adding from it turned out to be plain
-  // http:// - blocked as mixed content on this https site - so it isn't
-  // wired in. Re-add it here if a genuinely https, non-restream find turns
-  // up in it later.
+  // NOTE: iptv-org's sports.m3u was evaluated (Setanta Sports, GolTV) but
+  // everything worth adding from it was plain http:// - blocked as mixed
+  // content on this https site - so it isn't wired in.
 ];
 
-module.exports = { SOURCE_URLS };
+// Hand-vetted one-off additions. Built from the local file; the browser
+// refreshes from this URL.
+const EXTRAS_FILE = 'config/extras.m3u';
+const EXTRAS_URL =
+  'https://raw.githubusercontent.com/SKFeath/skfeath-tv/main/config/extras.m3u';
+
+// What the browser fetches for live refresh (baked into channels.js).
+const SOURCE_URLS = [...REMOTE_SOURCES, EXTRAS_URL];
+
+module.exports = { SOURCE_URLS, REMOTE_SOURCES, EXTRAS_FILE };

@@ -10,7 +10,7 @@
 #  Lines already commented with "<- reason" cannot play in a
 #  browser at all (plain http, YouTube/Twitch page links, DASH).
 #
-#  Sourced from 3 playlist(s) - see tools/source-url.js.
+#  Sourced from 2 playlist(s) + config/extras.m3u.
 #  A name appearing in several playlists is kept once, from the
 #  source listed first there.
 #
@@ -936,7 +936,7 @@ La 1 (Canarias)
 La 2 (Catalunya)
 La 2 (Canarias)
 
-## Sports  (46)
+## Sports  (48)
 T Sports Live 01
 T Sports Live 01 (1)
 T Sports (1080p) (1) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2) (2)
@@ -983,6 +983,8 @@ Sky Sports Tennis
 Fox Cricket 501 HD
 Sony Sports3
 # Star Sports 1 HD   <- http-only, cannot play on an https site
+T Sports HD
+Star Sports 2
 
 ## Hungary  (46)
 # M1 Ⓖ   <- http-only, cannot play on an https site
@@ -2138,6 +2140,18 @@ TVP Kultura 2
 4fun.tv Ⓢ
 TV Republika
 
+## Bangladeshi  (10)
+ATN News
+ATN Bangla
+N TV
+DBC News
+Banglavision
+SA TV
+Enter TV
+Ekushe TV
+Me Tv
+SRK
+
 ## ISLAMIC CHANNELS  (9)
 Unnamed
 QURAN RADIOTV SMC
@@ -2295,6 +2309,21 @@ CGTN Español
 RT Español Ⓖ
 RTVE 24H
 
+## Music  (6)
+PTC Music
+Epic Music
+Music India
+Bengali Beats
+Zoom
+Sangeet Bhojpuri
+
+## Kids  (5)
+BBC Cbeebies
+PBS Kids
+Cartoon Network
+# Nursary Rhymes   <- http-only, cannot play on an https site
+Duronto TV
+
 ## CARTOON Drama  (5)
 Gopal Bhar TV
 Tom & Jerry TV
@@ -2358,6 +2387,13 @@ KTCA-DT5
 The Weather Network
 Sky News Weather Ⓖ
 
+## Indian News  (5)
+Zee 24 Ghanta
+R Plus News
+TV9 Bangla
+Aaj Tak HD
+Republic Bangla
+
 ## Bangla  (4)
 # MUSIC BANGLA   <- http-only, cannot play on an https site
 MY TV
@@ -2370,11 +2406,11 @@ Mundial Sports HD
 A SPOR
 Real Madrid TV
 
-## Kids  (4)
-BBC Cbeebies
-PBS Kids
-Cartoon Network
-# Nursary Rhymes   <- http-only, cannot play on an https site
+## Documentary  (4)
+Insight
+REAL WILD
+Discover Pakistan
+Love Natural 4K
 
 ## Montenegro  (4)
 TVCG 1 Ⓖ
@@ -2447,6 +2483,11 @@ Now 70's
 Now 80's
 NOW Rock
 
+## Islamic  (3)
+Iqra Bangla
+Iqraa TV
+Peace TV Bangla
+
 ## Infotainment Channels  (2)
 Travel XP English
 Amazon SAT
@@ -2454,10 +2495,6 @@ Amazon SAT
 ## Entertainment  (2)
 Colors Infinity SD
 FASHION ONE
-
-## Documentary  (2)
-Insight
-REAL WILD
 
 ## Kolkata Bangla  (2)
 R Plus Gold
@@ -2553,3 +2590,6 @@ Folx Slovenija
 
 ## Documentaries (AR)  (1)
 Al Jazeera Documentary Ⓖ
+
+## Indian Bangla  (1)
+Enter 10 Bangla

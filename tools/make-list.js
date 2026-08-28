@@ -6,8 +6,8 @@
 //   node tools/make-list.js
 const fs = require('fs');
 const path = require('path');
-const { fetchAndMerge, unplayableReason } = require('./lib-m3u');
-const { SOURCE_URLS } = require('./source-url');
+const { fetchAndMergeWithExtras, unplayableReason } = require('./lib-m3u');
+const { REMOTE_SOURCES, EXTRAS_FILE } = require('./source-url');
 
 const OUT = path.join(__dirname, '..', 'config', 'channels.txt');
 
@@ -43,8 +43,8 @@ function readExisting() {
 }
 
 async function main() {
-  console.log('Fetching ' + SOURCE_URLS.length + ' playlist(s)...');
-  const { channels, sources } = await fetchAndMerge(SOURCE_URLS);
+  console.log('Fetching ' + REMOTE_SOURCES.length + ' playlist(s) + local extras...');
+  const { channels, sources } = await fetchAndMergeWithExtras(REMOTE_SOURCES, path.join(__dirname, '..', EXTRAS_FILE));
 
   let collapsed = 0;
   for (const s of sources) {
@@ -93,7 +93,7 @@ async function main() {
     '#  Lines already commented with "<- reason" cannot play in a',
     '#  browser at all (plain http, YouTube/Twitch page links, DASH).',
     '#',
-    '#  Sourced from ' + SOURCE_URLS.length + ' playlist(s) - see tools/source-url.js.',
+    '#  Sourced from ' + REMOTE_SOURCES.length + ' playlist(s) + config/extras.m3u.',
     '#  A name appearing in several playlists is kept once, from the',
     '#  source listed first there.',
     '#',

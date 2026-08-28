@@ -6,9 +6,9 @@
 // Output has no backend and no build step at the host: plain HTML, CSS and JS.
 const fs = require('fs');
 const path = require('path');
-const { fetchAndMerge, unplayableReason } = require('./lib-m3u');
+const { fetchAndMergeWithExtras, unplayableReason } = require('./lib-m3u');
 const { classify, buildTree } = require('./categorize');
-const { SOURCE_URLS } = require('./source-url');
+const { SOURCE_URLS, REMOTE_SOURCES, EXTRAS_FILE } = require('./source-url');
 
 const ROOT = path.join(__dirname, '..');
 const WEB = path.join(ROOT, 'web');
@@ -40,8 +40,8 @@ async function main() {
     return;
   }
 
-  console.log('Fetching ' + SOURCE_URLS.length + ' playlist(s)...');
-  const { channels: all, sources } = await fetchAndMerge(SOURCE_URLS);
+  console.log('Fetching ' + REMOTE_SOURCES.length + ' playlist(s) + local extras...');
+  const { channels: all, sources } = await fetchAndMergeWithExtras(REMOTE_SOURCES, path.join(ROOT, EXTRAS_FILE));
   for (const s of sources) {
     if (s.error) console.log('  FAILED  ' + s.url + '  (' + s.error + ')');
     else console.log('  ok      ' + s.url + '  -  ' + s.total + ' channels');
