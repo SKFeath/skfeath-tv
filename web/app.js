@@ -417,7 +417,9 @@ function selectCategory(category, subcategory) {
   state.subcategory = subcategory;
   el('crumb').textContent = subcategory ? category + ' › ' + subcategory
     : category === 'All' ? 'All channels' : category;
-  closeDrawer();
+  // NOTE: do NOT close the mobile drawer here - browsing a category to reach
+  // its subcategories must keep the drawer open. It closes only when a channel
+  // is actually picked (see play()) or when the user dismisses it themselves.
   renderCats();
   applyFilter();
 }
@@ -579,6 +581,7 @@ function destroyPlayer() {
 
 function play(c) {
   state.current = c;
+  closeDrawer(); // picking a channel dismisses the mobile category drawer
   destroyPlayer();
   renderList();
 
