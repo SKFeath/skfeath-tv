@@ -13,6 +13,9 @@ const SOURCE_URLS = [
   'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/main/playlist.m3u',
   // Free-TV: large international list, grouped by country.
   'https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8',
+  // Hand-picked one-off finds, checked individually rather than pulled from
+  // a bulk playlist. See config/extras.m3u.
+  'https://raw.githubusercontent.com/SKFeath/skfeath-tv/main/config/extras.m3u',
   // NOTE: iptv-org's sports.m3u was evaluated (Setanta Sports, GolTV Latin
   // America) but everything worth adding from it turned out to be plain
   // http:// - blocked as mixed content on this https site - so it isn't

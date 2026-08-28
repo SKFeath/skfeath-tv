@@ -10,7 +10,7 @@
 #  Lines already commented with "<- reason" cannot play in a
 #  browser at all (plain http, YouTube/Twitch page links, DASH).
 #
-#  Sourced from 2 playlist(s) - see tools/source-url.js.
+#  Sourced from 3 playlist(s) - see tools/source-url.js.
 #  A name appearing in several playlists is kept once, from the
 #  source listed first there.
 #
@@ -2364,6 +2364,12 @@ MY TV
 # MAASRANGA HD   <- http-only, cannot play on an https site
 BTV News
 
+## Football  (4)
+# QAZ Sports HD   <- http-only, cannot play on an https site
+Mundial Sports HD
+A SPOR
+Real Madrid TV
+
 ## Kids  (4)
 BBC Cbeebies
 PBS Kids
@@ -2385,11 +2391,6 @@ BBC News
 Deshe Bideshe
 RTV
 Maasranga Tv
-
-## Football  (3)
-# QAZ Sports HD   <- http-only, cannot play on an https site
-Mundial Sports HD
-A SPOR
 
 ## NEWS INTERNASIONAL TV  (3)
 France News 24
