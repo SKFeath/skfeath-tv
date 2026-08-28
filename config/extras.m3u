@@ -1,3 +1,93 @@
 #EXTM3U
+# ---------------------------------------------------------------
+# Hand-vetted one-off channel additions (checked individually).
+# ---------------------------------------------------------------
 #EXTINF:-1 group-title="Football",Real Madrid TV
 https://rmtv.akamaized.net/hls/live/2043156/rmtv-en-mob/master.m3u8
+
+#EXTINF:-1 group-title="Bangladeshi",Boishakhi
+https://tvsen6.aynaott.com/1d3uG9VCgrR9DRtWZM57/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",ATN News
+https://tvsen6.aynaott.com/da6WMXAk/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",ATN Bangla
+https://tvsen5.aynaott.com/P3y2URgG7LDe/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Somoy Tv
+https://tvsen6.aynaott.com/4XcqdovJzbbC9WdJA9gk/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Channel i
+https://tvsen6.aynaott.com/FNHpYvGZ7FkCE10PwTHm/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Jamuna
+https://tvsen6.aynaott.com/KGdZEdA7qQ43dmPkgk1j/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Ekattor HD
+https://tvsen6.aynaott.com/EWDrV5QskgarZEUBb3pU/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",DBC News
+https://tvsen6.aynaott.com/pF66Tkz0qFwP2aMMqHyt/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Banglavision
+https://tvsen5.aynaott.com/tgUzpPc9r6xw/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",SA TV
+https://tvsen6.aynaott.com/rELXiuUXqbgzPb06Npom/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Rajdhani
+https://stream.shariarsuvo.com/hls5/rajdhanicable.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Deepto
+https://byphdgllyk.gpcdn.net/hls/deeptotv/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Maasranga
+https://mtv.sunplex.live/MAASRANGA/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Enter TV
+https://live1.entertv.com.bd/entertv/index.fmp4.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Ananda
+https://tvsen6.aynaott.com/LeUAm4F1iixYns3s3Non/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Bangla Tv
+https://tvsen6.aynaott.com/39ee93nUbCCmm5LsyD4t/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Ekushe TV
+https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/ekusheytv-8-org.stream/index.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Me Tv
+https://iptvbd.live/metv1080/1080.m3u8
+#EXTINF:-1 group-title="Bangladeshi",SRK
+https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/playlist.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Bijoy Tv
+https://stream.ottplus.live/live/bijoy_tv_abr/index.m3u8
+#EXTINF:-1 group-title="Islamic",Iqra Bangla
+https://app.ncare.live/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI2/iqrabanglatvoffice.stream/live-orgin/iqrabanglatvoffice.stream/chunks.m3u8
+#EXTINF:-1 group-title="Kids",Duronto TV
+https://tvsen6.aynaott.com/6xyZ3N4oHv2KBJdB6W4p/index.m3u8
+#EXTINF:-1 group-title="Islamic",Quran TV
+https://live.kwikmotion.com/sharjahtvquranlive/shqurantv.smil/sharjahtvquranpublish/shqurantv_source/chunks.m3u8
+#EXTINF:-1 group-title="Islamic",Iqraa TV
+https://playlist.fasttvcdn.com/pl/dlkqw1ftuvuuzkcb4pxdcg/Iqraafasttv1/playlist.m3u8
+#EXTINF:-1 group-title="Indian Bangla",Enter 10 Bangla
+https://live-bangla.akamaized.net/liveabr/pub-iobanglakp3sff/live_720p/chunks.m3u8
+#EXTINF:-1 group-title="Islamic",Peace TV Bangla
+https://dzkyvlfyge.erbvr.com/PeaceTvBangla/tracks-v3a1/mono.m3u8
+#EXTINF:-1 group-title="Bangladeshi",Desh TV
+https://app24.jagobd.com.bd/c3VydmVyX8RpbEU9Mi8xNy8yMFDEEHGcfRgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcEdsEfeDeKiNkVN3PTOmdFseWRtaW51aiPhnPTI2/deshtv.stream/index.m3u8
+#EXTINF:-1 group-title="Indian News",Zee 24 Ghanta
+https://d2dsoyvkr33m05.cloudfront.net/index_5.m3u8
+#EXTINF:-1 group-title="Indian News",R Plus News
+https://thelegitpro.in/pntv/rplusnews24x7/index.m3u8
+#EXTINF:-1 group-title="Indian News",TV9 Bangla
+https://dyjmyiv3bp2ez.cloudfront.net/pub-iotv9banaen8yq/liveabr/playlist.m3u8
+#EXTINF:-1 group-title="Indian News",Aaj Tak HD
+https://aajtaklive-amd.akamaized.net/hls/live/2014416/aajtak/aajtaklive/live_720p/chunks.m3u8
+#EXTINF:-1 group-title="Indian News",Republic Bangla
+https://vg-republictvyupp.akamaized.net/ptnr-yuppt/v1/manifest/611d79b11b77e2f571934fd80ca1413453772ac7/vglive-sk-613605/93d674ab-f7a0-404e-88b2-b4f163373dbe/0.m3u8
+#EXTINF:-1 group-title="Music",PTC Music
+https://d2lk5u59tns74c.cloudfront.net/out/v1/f913cf893c594f73b114216e74a2efbc/index.m3u8
+#EXTINF:-1 group-title="Music",Epic Music
+https://mumt04.tangotv.in/m18aqlK4EPICMUSIC/index.m3u8
+#EXTINF:-1 group-title="Music",Music India
+https://cdn-2.pishow.tv/live/226/master.m3u8
+#EXTINF:-1 group-title="Music",Bengali Beats
+https://live20.bozztv.com/giatvplayout7/giatv-209587/tracks-v1a1/mono.ts.m3u8
+#EXTINF:-1 group-title="Music",Zoom
+https://pubads.g.doubleclick.net/ssai/event/JCAm25qkRXiKcK1AJMlvKQ/master.m3u8
+#EXTINF:-1 group-title="Music",yrf Music
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01412-xiaomiasia-yrfmusic-xiaomi/playlist.m3u8
+#EXTINF:-1 group-title="Sports",T Sports HD
+https://tvsen5.aynaott.com/TnMn5kZz8aLm/index.m3u8
+#EXTINF:-1 group-title="Music",Sangeet Bhojpuri
+https://cdn-4.pishow.tv/live/1293/master.m3u8
+#EXTINF:-1 group-title="Sports",Star Sports 2
+https://tvsen7.aynaott.com/ssport2hd/index.m3u8
+#EXTINF:-1 group-title="Documentary",Discover Pakistan
+https://livecdn.live247stream.com/discoverpakistan/web/playlist.m3u8
+#EXTINF:-1 group-title="Documentary",Love Natural 4K
+https://jmp2.uk/rok-479fe0d11f3f5132a3f36b617547da3b.m3u8
