@@ -11,14 +11,15 @@ const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).cat
 
 // --- session ---------------------------------------------------------------
 router.post('/login', (req, res) => {
-  const name = auth.resolveCode(req.body && req.body.code);
-  if (!name) return res.status(401).json({ error: 'That access code is not valid.' });
+  const info = auth.resolveCode(req.body && req.body.code);
+  if (!info) return res.status(401).json({ error: 'That access code is not valid.' });
   const code = String((req.body && req.body.code) || '');
   req.session.regenerate((err) => {
     if (err) return res.status(500).json({ error: 'Could not start a session.' });
-    req.session.user = name;
+    req.session.user = info.name;
+    req.session.rank = info.rank;
     req.session.code = code;
-    res.json({ ok: true, user: name });
+    res.json({ ok: true, user: info.name, rank: info.rank });
   });
 });
 
@@ -31,8 +32,10 @@ router.get('/me', (req, res) => {
   if (!req.session || !req.session.user) return res.status(401).json({ error: 'Not signed in' });
   res.json({
     user: req.session.user,
+    rank: req.session.rank,
     mode: source.mode,
     canChangeChannel: auth.canChangeChannel(req.session),
+    control: config.channelControl,
     upstreamConnections: config.upstreamConnections,
   });
 });
@@ -71,14 +74,21 @@ router.get('/epg/:id', wrap(async (req, res) => {
 // Everyone watches the same channel, because the subscription only permits
 // UPSTREAM_CONNECTIONS live channels at a time.
 router.get('/room', (req, res) => {
-  auth.seen(req.sessionID, req.session.user);
+  auth.seen(req.sessionID, req.session);
   const live = fanout.active();
+  const viewers = auth.presence();
+  const controller = viewers.find((v) => v.controlling) || null;
+  const may = auth.mayChangeChannel(req.session);
   res.json({
     playing: live[0] || null,
     live,
-    viewers: auth.presence(),
+    viewers,
+    controller: controller ? { user: controller.user, rank: controller.rank } : null,
     lastChange: auth.recentChange(),
-    canChangeChannel: auth.canChangeChannel(req.session),
+    canChangeChannel: may.ok,
+    changeBlockedReason: may.ok ? null : may.reason,
+    cooldownMs: auth.cooldownRemainingMs(),
+    control: config.channelControl,
     upstreamConnections: config.upstreamConnections,
   });
 });
@@ -89,8 +99,10 @@ router.get('/room', (req, res) => {
  * connection, so it needs ?force=1 once the client has confirmed.
  */
 router.post('/room/channel', wrap(async (req, res) => {
-  if (!auth.canChangeChannel(req.session)) {
-    return res.status(403).json({ error: 'Only the owner can change the channel here.' });
+  const may = auth.mayChangeChannel(req.session);
+  if (!may.ok) {
+    return res.status(may.code === 'COOLDOWN' ? 429 : 403)
+      .json({ error: may.reason, code: may.code, retryMs: may.retryMs });
   }
 
   const id = String((req.body && req.body.channelId) || '');
@@ -113,7 +125,7 @@ router.post('/room/channel', wrap(async (req, res) => {
     });
   }
 
-  auth.seen(req.sessionID, req.session.user, channel.name);
+  auth.seen(req.sessionID, req.session, channel.name);
   if (result.switched) auth.noteChange(req.session.user, channel.name);
 
   res.json({ ok: true, playing: result.session.stats(), switched: result.switched });
@@ -126,7 +138,7 @@ router.get('/live/:id/index.m3u8', (req, res) => {
   const session = fanout.get(req.params.id);
   if (!session) return res.status(404).json({ error: 'That channel is not playing right now.' });
   session.touch();
-  auth.seen(req.sessionID, req.session.user, session.channel.name);
+  auth.seen(req.sessionID, req.session, session.channel.name);
   res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
   res.setHeader('Cache-Control', 'no-store');
   res.send(session.playlist());

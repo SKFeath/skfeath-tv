@@ -65,6 +65,7 @@ async function waitForPort(port, timeoutMs = 10000) {
     SESSION_SECRET: 'test-secret-for-integration',
     UPSTREAM_CONNECTIONS: '1',
     IDLE_STOP_SECONDS: '10',
+    CHANGE_COOLDOWN_SECONDS: '0', // this suite tests fan-out, not the anti-flip cooldown
     PORT: String(APP_PORT),
   });
   await waitForPort(APP_PORT);

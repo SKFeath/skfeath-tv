@@ -151,6 +151,13 @@ async function requestChannel(channel, force) {
       showOverlay('Still watching', others, false);
       return;
     }
+    // 403 = someone higher-ranked holds the remote; 429 = change cooldown.
+    // Both come with a plain-language reason from the server.
+    if (err.status === 403 || err.status === 429) {
+      showOverlay(err.status === 429 ? 'Just a sec' : "You can't change this", err.message, false);
+      syncRoom();
+      return;
+    }
     showOverlay('Could not switch', err.message, false);
   }
 }
@@ -178,19 +185,29 @@ function renderRoom(room) {
     showOverlay('Nothing playing', 'Pick a channel from the list.', false);
   }
 
-  const names = room.viewers.map((v) => v.user);
+  // Viewer list, with a crown on whoever holds the remote.
+  const names = room.viewers.map((v) => (v.controlling ? '\u{1F451} ' : '') + v.user);
   el('watchers').textContent = names.length
     ? names.length + ' watching: ' + names.join(', ')
     : 'nobody watching';
 
+  // Remote-holder + your own status line.
+  state.cooldownMs = room.cooldownMs || 0;
   const banner = el('room-note');
-  if (room.lastChange) {
-    banner.textContent =
-      room.lastChange.user + ' switched to ' + room.lastChange.channelName;
-    banner.classList.remove('hidden');
-  } else {
-    banner.classList.add('hidden');
+  let msg = '';
+  if (room.control === 'roles' && room.controller) {
+    msg = room.canChangeChannel
+      ? '\u{1F3AE} You have the remote'
+      : '\u{1F451} ' + room.controller.user + ' has the remote';
   }
+  if (room.cooldownMs > 800) {
+    const s = Math.ceil(room.cooldownMs / 1000);
+    msg = (msg ? msg + '  ·  ' : '') + 'channel locked for ' + s + 's';
+  } else if (room.lastChange) {
+    msg = (msg ? msg + '  ·  ' : '') + room.lastChange.user + ' → ' + room.lastChange.channelName;
+  }
+  if (msg) { banner.textContent = msg; banner.classList.remove('hidden'); }
+  else banner.classList.add('hidden');
 }
 
 async function syncRoom() {

@@ -14,7 +14,8 @@
     "build": "node tools/build-static.js",
     "preview": "node tools/preview.js",
     "health": "node tools/health-check.js",
-    "prune": "node tools/prune.js"
+    "prune": "node tools/prune.js",
+    "test:roles": "node scripts/role-test.js"
   },
   "engines": {
     "node": ">=18"
