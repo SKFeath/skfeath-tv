@@ -66,6 +66,7 @@ const state = {
   favs: new Set(),
   health: {},           // url -> true/false
   hideDead: true,
+  tab: 'tv',
   scanning: false,
   current: null,
   hls: null,
@@ -280,6 +281,12 @@ function setHealthLabel(done, total) {
   }
   el('stat-ok').textContent = aliveCount();
   el('stat-off').textContent = deadCount();
+  // keep the profile tab's live counts fresh while scanning
+  const pr = el('profile-reachable');
+  if (pr && state.tab === 'you') {
+    pr.textContent = aliveCount();
+    el('profile-unavailable').textContent = deadCount();
+  }
 }
 
 function isDead(c) { return state.health[c.url] === false; }
@@ -676,19 +683,21 @@ el('hide-dead').addEventListener('change', (e) => {
   renderCats();
 });
 
-el('rescan').addEventListener('click', () => {
+function doRescan() {
   state.health = {};
   saveHealth();
   applyFilter();
   renderCats();
+  renderProfile();
   scanHealth(Infinity);
-});
+}
+el('rescan').addEventListener('click', doRescan);
 
 // "Reachable" only means anything from the connection that measured it -
 // BDIX channels reach a Bangladeshi visitor and refuse everyone else, so this
 // list only has meaning for the browser that generated it. That's why it's a
 // button, not a fixed file: it always reflects the exporter's own network.
-el('export-reachable').addEventListener('click', () => {
+function exportReachable() {
   const alive = state.channels
     .filter((c) => state.health[c.url] === true)
     .sort((a, b) => a.category.localeCompare(b.category) || a.subcategory.localeCompare(b.subcategory) || a.name.localeCompare(b.name));
@@ -718,7 +727,8 @@ el('export-reachable').addEventListener('click', () => {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-});
+}
+el('export-reachable').addEventListener('click', exportReachable);
 
 el('prev').addEventListener('click', () => step(-1));
 el('next').addEventListener('click', () => step(1));
@@ -746,6 +756,81 @@ el('navbtn').addEventListener('click', () => {
 });
 
 // ---------------------------------------------------------------------------
+// tabs: TV / Room / You
+// ---------------------------------------------------------------------------
+const TAB_SUB = { tv: 'Live TV', room: 'Homies Room', you: 'Profile' };
+let roomLoaded = false;
+
+function setTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.tabpanel').forEach((p) => p.classList.toggle('active', p.id === 'tab-' + tab));
+  document.querySelectorAll('.tabbtn').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
+  const app = el('app');
+  app.classList.remove('tab-tv', 'tab-room', 'tab-you');
+  app.classList.add('tab-' + tab);
+  const sub = el('brand-sub');
+  if (sub) sub.textContent = TAB_SUB[tab] || 'Live TV';
+  if (tab === 'you') renderProfile();
+  if (tab === 'room') openRoom();
+  try { sessionStorage.setItem('sk-tab', tab); } catch (e) { /* ignore */ }
+}
+
+function wireTabs() {
+  document.querySelectorAll('.tabbtn').forEach((b) => {
+    b.addEventListener('click', () => setTab(b.dataset.tab));
+  });
+}
+
+// The Room tab loads the fan-out server (window.ROOM_URL) in an iframe. Until
+// that server exists, ROOM_URL is empty and we leave the "offline" screen up.
+function openRoom() {
+  if (roomLoaded) return;
+  const url = window.ROOM_URL;
+  if (!url) return; // stays on the offline screen
+  const frame = el('room-frame');
+  const offline = el('room-offline');
+  frame.src = url;
+  frame.classList.remove('hidden');
+  offline.classList.add('hidden');
+  roomLoaded = true;
+}
+
+// ---------------------------------------------------------------------------
+// You / profile
+// ---------------------------------------------------------------------------
+function renderProfile() {
+  const favs = state.favs ? state.favs.size : 0;
+  el('profile-favs').textContent = favs;
+  el('profile-reachable').textContent = aliveCount();
+  el('profile-unavailable').textContent = deadCount();
+  el('profile-total').textContent = state.channels.length;
+  const cb = el('profile-hide-dead');
+  if (cb) cb.checked = state.hideDead;
+  const src = el('profile-sources');
+  if (src) {
+    const n = (window.SOURCE_URLS || []).length;
+    src.textContent = 'Playing ' + state.channels.length + ' channels from ' + n +
+      ' public playlist source(s). Streams play straight from their origin — nothing passes through this site, so what works depends on your own connection.';
+  }
+}
+
+function wireProfile() {
+  el('profile-hide-dead').addEventListener('change', (e) => {
+    state.hideDead = e.target.checked;
+    store.set(HIDE_KEY, state.hideDead);
+    el('hide-dead').checked = state.hideDead; // keep the TV-tab toggle in sync
+    applyFilter();
+    renderCats();
+  });
+  el('profile-rescan').addEventListener('click', doRescan);
+  el('profile-export').addEventListener('click', exportReachable);
+  el('profile-signout').addEventListener('click', () => {
+    try { sessionStorage.removeItem(GATE_KEY); } catch (e) { /* ignore */ }
+    location.reload();
+  });
+}
+
+// ---------------------------------------------------------------------------
 // boot
 // ---------------------------------------------------------------------------
 function boot() {
@@ -765,10 +850,18 @@ function boot() {
 
   el('foot').textContent = (window.SOURCE_URLS || []).length + ' playlist source(s)';
 
+  wireTabs();
+  wireProfile();
   renderCats();
   applyFilter();
+  renderProfile();
   setState('idle', 'Pick a channel to start',
     'Streams play straight from their own origin — no video passes through this site.');
+
+  // Restore the last tab within this session (defaults to TV).
+  let startTab = 'tv';
+  try { startTab = sessionStorage.getItem('sk-tab') || 'tv'; } catch (e) { /* ignore */ }
+  setTab(startTab);
 
   // Cached results are already on screen; verify in the background.
   refreshFromSource().then(() => scanHealth(cacheAge));

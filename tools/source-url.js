@@ -32,4 +32,9 @@ const EXTRAS_URL =
 // What the browser fetches for live refresh (baked into channels.js).
 const SOURCE_URLS = [...REMOTE_SOURCES, EXTRAS_URL];
 
-module.exports = { SOURCE_URLS, REMOTE_SOURCES, EXTRAS_FILE };
+// The Homies live-TV room server (the fan-out server, e.g. on Oracle). The
+// "Room" tab loads this in an iframe. Leave empty until the server is up -
+// the tab then shows an "offline" screen. Set via ROOM_URL env at build time.
+const ROOM_URL = (process.env.ROOM_URL || '').trim();
+
+module.exports = { SOURCE_URLS, REMOTE_SOURCES, EXTRAS_FILE, ROOM_URL };

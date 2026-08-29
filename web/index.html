@@ -26,7 +26,7 @@
 </div>
 
 <!-- ----------------------------------------------------------------- shell -->
-<div class="app hidden" id="app">
+<div class="app hidden tab-tv" id="app">
   <header class="topbar">
     <button class="navbtn" id="navbtn" aria-label="Menu">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -37,89 +37,152 @@
       </div>
       <div>
         <div class="brand-name">__SITE_TITLE__</div>
-        <div class="brand-sub">Live TV</div>
+        <div class="brand-sub" id="brand-sub">Live TV</div>
       </div>
     </div>
     <div class="spacer"></div>
-    <div class="topmeta">
+    <div class="topmeta tv-only">
       <span class="pill"><span class="dot" id="health-dot"></span><span id="health">ready</span></span>
       <button class="linkbtn" id="rescan">Re-check</button>
     </div>
   </header>
 
-  <div class="grid">
-    <!-- categories -->
-    <nav class="sidebar scroll" id="sidebar">
-      <div class="side-label">Browse</div>
-      <div class="catsearch">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="cat-search" type="search" placeholder="Search categories…" autocomplete="off">
-      </div>
-      <div id="cats"></div>
-      <div class="side-hint">↑ / ↓ switches channel</div>
-    </nav>
-
-    <!-- player -->
-    <section class="stage scroll">
-      <div class="video-box">
-        <video id="video" controls playsinline autoplay></video>
-        <div class="state" id="state"></div>
-      </div>
-
-      <div class="crumb">
-        <span>Live TV</span>
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        <span class="now" id="crumb">All channels</span>
-      </div>
-
-      <div class="metarow">
-        <div class="metaleft">
-          <img class="metalogo hidden" id="meta-logo" alt="">
-          <div style="min-width:0">
-            <div class="metakicker">Now playing</div>
-            <div class="metatitle" id="now-title">Nothing playing</div>
-            <div class="metasub" id="now-meta">Pick a channel to start</div>
+  <main class="content">
+    <!-- ============================ TV tab ============================ -->
+    <section class="tabpanel active" id="tab-tv">
+      <div class="grid">
+        <nav class="sidebar scroll" id="sidebar">
+          <div class="side-label">Browse</div>
+          <div class="catsearch">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input id="cat-search" type="search" placeholder="Search categories…" autocomplete="off">
           </div>
-        </div>
-        <div class="stats">
-          <div class="stat ok"><b id="stat-ok">–</b><span>reachable</span></div>
-          <div class="stat off"><b id="stat-off">–</b><span>unavailable</span></div>
-        </div>
-      </div>
+          <div id="cats"></div>
+          <div class="side-hint">↑ / ↓ switches channel</div>
+        </nav>
 
-      <div class="navrow">
-        <button id="prev">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          Previous
-        </button>
-        <button id="next">
-          Next
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
+        <section class="stage scroll">
+          <div class="video-box">
+            <video id="video" controls playsinline autoplay></video>
+            <div class="state" id="state"></div>
+          </div>
+
+          <div class="crumb">
+            <span>Live TV</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            <span class="now" id="crumb">All channels</span>
+          </div>
+
+          <div class="metarow">
+            <div class="metaleft">
+              <img class="metalogo hidden" id="meta-logo" alt="">
+              <div style="min-width:0">
+                <div class="metakicker">Now playing</div>
+                <div class="metatitle" id="now-title">Nothing playing</div>
+                <div class="metasub" id="now-meta">Pick a channel to start</div>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat ok"><b id="stat-ok">–</b><span>reachable</span></div>
+              <div class="stat off"><b id="stat-off">–</b><span>unavailable</span></div>
+            </div>
+          </div>
+
+          <div class="navrow">
+            <button id="prev">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              Previous
+            </button>
+            <button id="next">
+              Next
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <aside class="listpane">
+          <div class="listhead">
+            <div class="search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input id="search" type="search" placeholder="Search channels…" autocomplete="off">
+            </div>
+            <div class="listopts">
+              <label class="toggle"><input type="checkbox" id="hide-dead" checked> Hide unavailable</label>
+              <span class="pill" id="count">–</span>
+            </div>
+          </div>
+          <div class="list scroll" id="list"></div>
+          <div class="listfoot">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            <span id="foot">loading…</span>
+            <span class="spacer"></span>
+            <button class="linkbtn" id="export-reachable" title="Download the channels currently reachable from THIS connection">Export ↓</button>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <!-- channels -->
-    <aside class="listpane">
-      <div class="listhead">
-        <div class="search">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted-2)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input id="search" type="search" placeholder="Search channels…" autocomplete="off">
+    <!-- =========================== Room tab =========================== -->
+    <section class="tabpanel" id="tab-room">
+      <div class="room-offline" id="room-offline">
+        <div class="state-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2v2a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V2"/><rect x="3" y="6" width="18" height="15" rx="2"/><circle cx="8.5" cy="13" r="1.5"/><circle cx="15.5" cy="13" r="1.5"/></svg>
         </div>
-        <div class="listopts">
-          <label class="toggle"><input type="checkbox" id="hide-dead" checked> Hide unavailable</label>
-          <span class="pill" id="count">–</span>
+        <h2>Homies Room</h2>
+        <p>Your private live-TV room. Everyone watches the same channel together — one person holds the remote, and control passes down the ranking when they leave.</p>
+        <div class="room-status" id="room-status"><span class="dot off"></span> Room is offline — the private server isn't connected yet.</div>
+        <p class="muted-small">It'll appear here automatically once the server is live.</p>
+      </div>
+      <iframe class="room-frame hidden" id="room-frame" title="Homies Room" allow="autoplay; fullscreen"></iframe>
+    </section>
+
+    <!-- ============================ You tab ============================ -->
+    <section class="tabpanel" id="tab-you">
+      <div class="profile scroll">
+        <div class="profile-head">
+          <div class="profile-avatar" id="profile-initials">☺</div>
+          <div>
+            <div class="metakicker">Signed in</div>
+            <div class="profile-name">You</div>
+            <div class="metasub">Bro-code access</div>
+          </div>
         </div>
+
+        <div class="profile-card">
+          <div class="profile-row"><span>★ Favourites</span><b id="profile-favs">0</b></div>
+          <div class="profile-row"><span>Channels available now</span><b id="profile-reachable">–</b></div>
+          <div class="profile-row"><span>Unavailable</span><b id="profile-unavailable">–</b></div>
+          <div class="profile-row"><span>Total in catalogue</span><b id="profile-total">–</b></div>
+        </div>
+
+        <div class="profile-card">
+          <label class="toggle profile-toggle"><input type="checkbox" id="profile-hide-dead" checked> Hide unavailable channels</label>
+          <button class="profile-action" id="profile-rescan">↻ Re-check all channels</button>
+          <button class="profile-action" id="profile-export">↓ Export working channels (.m3u)</button>
+        </div>
+
+        <div class="profile-card muted-small" id="profile-sources"></div>
+
+        <button class="profile-signout" id="profile-signout">Sign out</button>
       </div>
-      <div class="list scroll" id="list"></div>
-      <div class="listfoot">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
-        <span id="foot">loading…</span>
-        <span class="spacer"></span>
-        <button class="linkbtn" id="export-reachable" title="Download the channels currently reachable from THIS connection">Export reachable ↓</button>
-      </div>
-    </aside>
-  </div>
+    </section>
+  </main>
+
+  <!-- ========================= bottom tab bar ========================= -->
+  <nav class="tabbar">
+    <button class="tabbtn active" data-tab="tv">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="m17 2-5 5-5-5"/></svg>
+      <span>TV</span>
+    </button>
+    <button class="tabbtn" data-tab="room">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Room</span>
+    </button>
+    <button class="tabbtn" data-tab="you">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>You</span>
+    </button>
+  </nav>
 </div>
 
 <script src="hls.min.js"></script>
