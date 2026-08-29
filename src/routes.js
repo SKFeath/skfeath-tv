@@ -79,11 +79,18 @@ router.get('/room', (req, res) => {
   const viewers = auth.presence();
   const controller = viewers.find((v) => v.controlling) || null;
   const may = auth.mayChangeChannel(req.session);
+  // Whether THIS viewer holds the remote (has authority), separate from whether
+  // they can change right this instant (which the cooldown can block).
+  const myRank = Number.isFinite(req.session.rank) ? req.session.rank : 999;
+  const youControl = config.channelControl === 'roles'
+    ? controller != null && myRank === controller.rank
+    : true;
   res.json({
     playing: live[0] || null,
     live,
     viewers,
     controller: controller ? { user: controller.user, rank: controller.rank } : null,
+    youControl,
     lastChange: auth.recentChange(),
     canChangeChannel: may.ok,
     changeBlockedReason: may.ok ? null : may.reason,

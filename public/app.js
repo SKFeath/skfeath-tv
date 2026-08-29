@@ -196,7 +196,9 @@ function renderRoom(room) {
   const banner = el('room-note');
   let msg = '';
   if (room.control === 'roles' && room.controller) {
-    msg = room.canChangeChannel
+    // youControl = you hold the remote (authority), independent of the
+    // cooldown that may momentarily block even the controller from changing.
+    msg = room.youControl
       ? '\u{1F3AE} You have the remote'
       : '\u{1F451} ' + room.controller.user + ' has the remote';
   }
