@@ -59,28 +59,46 @@ bash deploy/setup.sh
 ```
 This installs the auto-start service. Check it: `systemctl status skfeath-tv`.
 
-## Step 5 — HTTPS with Caddy (one-time, gives a clean https link)
+## Step 5 — HTTPS with a Cloudflare Tunnel (no domain, no open ports)
 
-You need a hostname for HTTPS. Easiest: a free one, or a domain you own,
-pointed at the VM's IP. Then:
+The tunnel dials OUT from the VM to Cloudflare, so you don't even need the
+firewall ports from step 2 for this. Two flavours:
+
+### Quick tunnel (instant, throwaway URL — good for a first test)
 ```bash
-sudo apt-get install -y debian-keyring debian-archive-keyring apt-transport-https curl
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
-sudo apt-get update && sudo apt-get install -y caddy
-
-sudo tee /etc/caddy/Caddyfile >/dev/null <<'CADDY'
-your-room-hostname.example.com {
-    reverse_proxy localhost:3000
-}
-CADDY
-sudo systemctl restart caddy
+curl -L -o cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64
+# on the AMD Micro shape use ...cloudflared-linux-amd64 instead
+chmod +x cloudflared && sudo mv cloudflared /usr/local/bin/
+cloudflared tunnel --url http://localhost:3000
 ```
-Caddy fetches a real TLS certificate automatically. Your room is now at
-`https://your-room-hostname.example.com`.
+It prints a `https://something-random.trycloudflare.com` URL. That's your
+room, over HTTPS, immediately. (This URL changes each run — fine for testing,
+not for the real thing.)
 
-> No domain yet? A **Cloudflare Tunnel** is an alternative that gives HTTPS
-> without opening ports or owning a domain — ask and I'll walk you through it.
+### Named tunnel (stable URL that survives reboots — for the real room)
+```bash
+cloudflared tunnel login          # opens a link; approve in your Cloudflare account
+cloudflared tunnel create homies
+# map it to a hostname on a domain in your Cloudflare account:
+cloudflared tunnel route dns homies room.yourdomain.com
+sudo cloudflared service install   # runs it on boot
+```
+Config lives in `~/.cloudflared/config.yml`:
+```yaml
+tunnel: homies
+credentials-file: /home/ubuntu/.cloudflared/<tunnel-id>.json
+ingress:
+  - hostname: room.yourdomain.com
+    service: http://localhost:3000
+  - service: http_status:404
+```
+Your room is then permanently at `https://room.yourdomain.com`.
+
+> A named tunnel needs a domain in your Cloudflare account. If you don't have
+> one, start with the quick tunnel to test, and grab a cheap domain (or a free
+> one) when you want the permanent link. Tell me which and I'll help.
+
+Either way, set `COOKIE_SECURE=1` in `.env` since you're now on HTTPS.
 
 ## Step 6 — Tell me the URL
 
